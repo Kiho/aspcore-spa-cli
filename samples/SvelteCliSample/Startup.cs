@@ -55,12 +55,11 @@ namespace SvelteCliSample
                 endpoints.MapControllers();
 
                 var autoBuild = new ScriptArgs("autobuild", 35729, "LiveReload enabled");
-                // Note: only use vuecliproxy in development. 
-                // Production should use "UseSpaStaticFiles()" and the webpack dist
+                // cli will not be invoked if we don't pass npmScript
                 endpoints.MapToSpaCliProxy(
                     "{*path}",
                     new SpaOptions { SourcePath = "ClientApp" },
-                    npmScript: env.IsDevelopment() ? "serve" : null, // (System.Diagnostics.Debugger.IsAttached)
+                    npmScript: env.IsDevelopment() ? "serve" : null,
                     port: 8080,
                     regex: "Your application is ready",
                     forceKill: true,
