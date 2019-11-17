@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "svelte-demo",
+  "scripts": {
+    "build": "rollup -c",
+    "autobuild": "rollup -c -w",
+    "dev": "run-p autobuild start:dev",
+    "start": "sirv public --single",
+    "serve": "sirv public --dev --single",
+    "start:dev": "sirv public --dev --single --port 8080"
+  },
+  "dependencies": {
+    "navaid": "^1.0.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.3",
+    "rollup": "^1.10.1",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-livereload": "^1.0.4",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^4.0.2",
+    "sirv-cli": "^0.4.0",
+    "svelte": "^3.6.7"
+  }
+}
