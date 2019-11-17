@@ -1,18 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Helpers for building single-page applications on ASP.NET MVC Core using Svelte Cli.</Description>
+    <Description>Helpers for building single-page applications on ASP.NET MVC Core.</Description>
     <TargetFramework>netcoreapp3.0</TargetFramework>
 
     <Title>SpaCliMiddleware</Title>
     <VersionPrefix>3.0.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <LangVersion>Latest</LangVersion>
-    <Authors>EEParker</Authors>
+    <Authors>EEParker, Kiho</Authors>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <RepositoryUrl>https://github.com/EEParker/aspnetcore-vueclimiddleware.git</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/EEParker/aspnetcore-vueclimiddleware.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Kiho/aspcore-spa-cli</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Kiho/aspcore-spa-cli</PackageProjectUrl>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageTags>SPA Svelte Vue</PackageTags>
+    <Company>Kiho</Company>
   </PropertyGroup>
 
   <ItemGroup>
