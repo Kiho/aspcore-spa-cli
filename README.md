@@ -9,7 +9,8 @@ and added support for other SPA frameworks.
 
 ## Svelte
 - Find the example here: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample](https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample)
-- Or install SpaCliMiddleware from nuget.
+- If you are using `dotnet run`, make sure navigate to applicationUrl defined in lunchSettings.json (port 5087 in SvelteCliSample)
+- Install SpaCliMiddleware from nuget in new project.
 ```csharp
         public void ConfigureServices(IServiceCollection services)
         {
