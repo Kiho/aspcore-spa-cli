@@ -78,7 +78,8 @@ namespace SpaCliMiddleware
                 { "BROWSER", "none" }, // We don't want vue-cli to open its own extra browser window pointing to the internal dev server port
             };
 
-            var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, $"--port {portNumber:0}", envVars, runner: runner);
+            //var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, $"--port {portNumber:0}", envVars, runner: runner);
+            var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, null, envVars, runner: runner);
             AppDomain.CurrentDomain.DomainUnload += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.ProcessExit += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.UnhandledException += (s, e) => npmScriptRunner?.Kill();

@@ -46,26 +46,43 @@ namespace SvelteCliSample
 
             app.UseSpaStaticFiles();
 
+            app.UseFileServer();
+
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
 
-                var autoBuild = new ScriptArgs("autobuild", 35729, "LiveReload enabled");
-                // cli will not be invoked if we don't pass npmScript
+                // Note: only use spacliproxy in development. 
+                // Production should use "UseSpaStaticFiles()" and the webpack dist
                 endpoints.MapToSpaCliProxy(
                     "{*path}",
                     new SpaOptions { SourcePath = "ClientApp" },
-                    npmScript: env.IsDevelopment() ? "serve" : null,
-                    port: 8080,
+                    npmScript: env.IsDevelopment() ? "autobuild" : null,
+                    port: 5000,
                     regex: "Your application is ready",
-                    forceKill: true,
-                    autoBuild: autoBuild
+                    forceKill: true
                     );
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+
+            //    var autoBuild = new ScriptArgs("autobuild", 35729, "LiveReload enabled");
+            //    // cli will not be invoked if we don't pass npmScript
+            //    endpoints.MapToSpaCliProxy(
+            //        "{*path}",
+            //        new SpaOptions { SourcePath = "ClientApp" },
+            //        npmScript: env.IsDevelopment() ? "serve" : null,
+            //        port: 8080,
+            //        regex: "Your application is ready",
+            //        forceKill: true,
+            //        autoBuild: autoBuild
+            //        );
+            //});
         }
     }
 }
