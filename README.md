@@ -8,8 +8,7 @@ This project forked from here: [https://github.com/EEParker/aspnetcore-vueclimid
 and added support for other SPA frameworks.
 
 ## Svelte
-- Find the example here: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample](https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample)
-```
+Find the example here: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample](https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample)
 
 ## Credits
 - https://github.com/EEParker/aspnetcore-vueclimiddleware
