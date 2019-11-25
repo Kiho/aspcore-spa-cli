@@ -25,7 +25,7 @@ This repo contains an aspnetcore 3.0 + Svelte.js sample code with SpaCliMiddlewa
             services.AddControllers();
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/public";
+                configuration.RootPath = "wwwroot";
             });
         }
 ```
