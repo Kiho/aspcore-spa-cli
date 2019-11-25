@@ -18,7 +18,7 @@ namespace SpaCliMiddleware
 
         public static void Attach(
             ISpaBuilder spaBuilder,
-            string scriptName, int port = 8080, ScriptRunnerType runner = ScriptRunnerType.Npm, string regex = DefaultRegex, bool forceKill = false, ScriptArgs autoBuild = null)
+            string scriptName, int port = 8080, ScriptRunnerType runner = ScriptRunnerType.Npm, string regex = DefaultRegex, bool forceKill = false, bool useProxy = true)
         {
             var sourcePath = spaBuilder.Options.SourcePath;
             if (string.IsNullOrEmpty(sourcePath))
@@ -34,30 +34,34 @@ namespace SpaCliMiddleware
             // Start vue-cli and attach to middleware pipeline
             var appBuilder = spaBuilder.ApplicationBuilder;
             var logger = LoggerFinder.GetOrCreateLogger(appBuilder, LogCategoryName);
-            var portTask = StartSpaCliServerAsync(sourcePath, scriptName, logger, port, runner, regex, forceKill, autoBuild);
+            var portTask = StartSpaCliServerAsync(sourcePath, scriptName, logger, port, runner, regex, forceKill);
+            if (!useProxy)
+            {
+                return;
+            }
 
             // Everything we proxy is hardcoded to target http://localhost because:
             // - the requests are always from the local machine (we're not accepting remote
             //   requests that go directly to the vue-cli server)
             // - given that, there's no reason to use https, and we couldn't even if we
             //   wanted to, because in general the vue-cli server has no certificate
-            //var targetUriTask = portTask.ContinueWith(
-            //    task => new UriBuilder("http", "localhost", task.Result).Uri);
+            var targetUriTask = portTask.ContinueWith(
+                task => new UriBuilder("http", "localhost", task.Result).Uri);
 
-            //SpaProxyingExtensions.UseProxyToSpaDevelopmentServer(spaBuilder, () =>
-            //{
-            //    // On each request, we create a separate startup task with its own timeout. That way, even if
-            //    // the first request times out, subsequent requests could still work.
-            //    var timeout = spaBuilder.Options.StartupTimeout;
-            //    return targetUriTask.WithTimeout(timeout,
-            //        $"The svelte-cli server did not start listening for requests " +
-            //        $"within the timeout period of {timeout.Seconds} seconds. " +
-            //        $"Check the log output for error information.");
-            //});
+            SpaProxyingExtensions.UseProxyToSpaDevelopmentServer(spaBuilder, () =>
+            {
+                // On each request, we create a separate startup task with its own timeout. That way, even if
+                // the first request times out, subsequent requests could still work.
+                var timeout = spaBuilder.Options.StartupTimeout;
+                return targetUriTask.WithTimeout(timeout,
+                    $"The svelte-cli server did not start listening for requests " +
+                    $"within the timeout period of {timeout.Seconds} seconds. " +
+                    $"Check the log output for error information.");
+            });
         }
 
         private static async Task<int> StartSpaCliServerAsync(
-            string sourcePath, string npmScriptName, ILogger logger, int portNumber, ScriptRunnerType runner, string regex, bool forceKill = false, ScriptArgs autoBuild = null)
+            string sourcePath, string npmScriptName, ILogger logger, int portNumber, ScriptRunnerType runner, string regex, bool forceKill = false)
         {            
             if (portNumber < 80)
             {
@@ -78,8 +82,8 @@ namespace SpaCliMiddleware
                 { "BROWSER", "none" }, // We don't want vue-cli to open its own extra browser window pointing to the internal dev server port
             };
 
-            //var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, $"--port {portNumber:0}", envVars, runner: runner);
-            var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, null, envVars, runner: runner);
+            var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, $"--port {portNumber:0}", envVars, runner: runner);
+            // var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, null, envVars, runner: runner);
             AppDomain.CurrentDomain.DomainUnload += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.ProcessExit += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.UnhandledException += (s, e) => npmScriptRunner?.Kill();
@@ -104,44 +108,7 @@ namespace SpaCliMiddleware
                         $"{message}", ex);
                 }
             }
-
-            if (autoBuild != null)
-            {
-                await StartAutoBuildAsync(sourcePath, logger, runner, autoBuild);
-            }
-
             return portNumber;
-        }
-
-        private static async Task StartAutoBuildAsync(
-            string sourcePath, ILogger logger, ScriptRunnerType runner, ScriptArgs args)
-        {
-            var portNo = (ushort)args.PortNumber;
-            PidUtils.KillPort(portNo, true);
-
-            var npmScriptRunner = new ScriptRunner(sourcePath, args.NpmScriptName, "", null, runner: runner);
-            AppDomain.CurrentDomain.DomainUnload += (s, e) => npmScriptRunner?.Kill();
-            AppDomain.CurrentDomain.ProcessExit += (s, e) => npmScriptRunner?.Kill();
-            AppDomain.CurrentDomain.UnhandledException += (s, e) => npmScriptRunner?.Kill();
-            npmScriptRunner.AttachToLogger(logger);
-
-            logger.LogInformation($"Starting autobuild on port {portNo}...");
-
-            using (var stdErrReader = new EventedStreamStringReader(npmScriptRunner.StdErr))
-            {
-                try
-                {
-                    await npmScriptRunner.StdOut.WaitForMatch(new Regex(args.Regex, RegexOptions.None, RegexMatchTimeout));
-                }
-                catch (EndOfStreamException ex)
-                {
-                    string message = stdErrReader.ReadAsString();
-                    throw new InvalidOperationException(
-                        $"The NPM script '{args.NpmScriptName}' exited without indicating that the " +
-                        $"server was listening for requests. The error output was: " +
-                        $"{message}", ex);
-                }
-            }
         }
     }
 }

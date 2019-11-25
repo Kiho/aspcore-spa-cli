@@ -31,7 +31,7 @@ namespace SpaCliMiddleware
             ScriptRunnerType runner = ScriptRunnerType.Npm,
             string regex = SpaCliMiddleware.DefaultRegex,
             bool forceKill = false,
-            ScriptArgs autoBuild = null)
+            bool useProxy = true)
         {
             if (spaBuilder == null)
             {
@@ -45,7 +45,7 @@ namespace SpaCliMiddleware
                 throw new InvalidOperationException($"To use {nameof(UseSpaCli)}, you must supply a non-empty value for the {nameof(SpaOptions.SourcePath)} property of {nameof(SpaOptions)} when calling {nameof(SpaApplicationBuilderExtensions.UseSpa)}.");
             }
 
-            SpaCliMiddleware.Attach(spaBuilder, npmScript, port, runner: runner, regex: regex, forceKill: forceKill, autoBuild: autoBuild);
+            SpaCliMiddleware.Attach(spaBuilder, npmScript, port, runner: runner, regex: regex, forceKill: forceKill, useProxy: useProxy);
         }
 
 
@@ -58,10 +58,10 @@ namespace SpaCliMiddleware
             ScriptRunnerType runner = ScriptRunnerType.Npm,
             string regex = SpaCliMiddleware.DefaultRegex,
             bool forceKill = false,
-            ScriptArgs autoBuild = null)
+            bool useProxy = true)
         {
             if (pattern == null) { throw new ArgumentNullException(nameof(pattern)); }
-            return endpoints.MapFallback(pattern, CreateProxyRequestDelegate(endpoints, options, npmScript, port, runner, regex, forceKill, autoBuild));
+            return endpoints.MapFallback(pattern, CreateProxyRequestDelegate(endpoints, options, npmScript, port, runner, regex, forceKill, useProxy));
         }
 
         public static IEndpointConventionBuilder MapToSpaCliProxy(
@@ -73,11 +73,11 @@ namespace SpaCliMiddleware
             ScriptRunnerType runner = ScriptRunnerType.Npm,
             string regex = SpaCliMiddleware.DefaultRegex,
             bool forceKill = false,
-            ScriptArgs autoBuild = null)
+            bool useProxy = true)
         {
             if (pattern == null) { throw new ArgumentNullException(nameof(pattern)); }
             if (sourcePath == null) { throw new ArgumentNullException(nameof(sourcePath)); }
-            return endpoints.MapFallback(pattern, CreateProxyRequestDelegate(endpoints, new SpaOptions { SourcePath = sourcePath }, npmScript, port, runner, regex, forceKill, autoBuild));
+            return endpoints.MapFallback(pattern, CreateProxyRequestDelegate(endpoints, new SpaOptions { SourcePath = sourcePath }, npmScript, port, runner, regex, forceKill, useProxy));
         }
 
         public static IEndpointConventionBuilder MapToSpaCliProxy(
@@ -88,9 +88,9 @@ namespace SpaCliMiddleware
             ScriptRunnerType runner = ScriptRunnerType.Npm,
             string regex = SpaCliMiddleware.DefaultRegex,
             bool forceKill = false,
-            ScriptArgs autoBuild = null)
+            bool useProxy = true)
         {
-            return endpoints.MapFallback("{*path}", CreateProxyRequestDelegate(endpoints, options, npmScript, port, runner, regex, forceKill, autoBuild));
+            return endpoints.MapFallback("{*path}", CreateProxyRequestDelegate(endpoints, options, npmScript, port, runner, regex, forceKill, useProxy));
         }
 
         public static IEndpointConventionBuilder MapToSpaCliProxy(
@@ -101,10 +101,10 @@ namespace SpaCliMiddleware
             ScriptRunnerType runner = ScriptRunnerType.Npm,
             string regex = SpaCliMiddleware.DefaultRegex,
             bool forceKill = false,
-            ScriptArgs autoBuild = null)
+            bool useProxy = true)
         {
             if (sourcePath == null) { throw new ArgumentNullException(nameof(sourcePath)); }
-            return endpoints.MapFallback("{*path}", CreateProxyRequestDelegate(endpoints, new SpaOptions { SourcePath = sourcePath }, npmScript, port, runner, regex, forceKill, autoBuild));
+            return endpoints.MapFallback("{*path}", CreateProxyRequestDelegate(endpoints, new SpaOptions { SourcePath = sourcePath }, npmScript, port, runner, regex, forceKill, useProxy));
         }
 
         private static RequestDelegate CreateProxyRequestDelegate(
@@ -115,13 +115,13 @@ namespace SpaCliMiddleware
             ScriptRunnerType runner = ScriptRunnerType.Npm,
             string regex = SpaCliMiddleware.DefaultRegex,
             bool forceKill = false,
-            ScriptArgs autoBuild = null)
+            bool useProxy = true)
         {
             // based on CreateRequestDelegate() https://github.com/aspnet/AspNetCore/blob/master/src/Middleware/StaticFiles/src/StaticFilesEndpointRouteBuilderExtensions.cs#L194
             
             if (endpoints == null) { throw new ArgumentNullException(nameof(endpoints)); }
             if (options == null) { throw new ArgumentNullException(nameof(options)); }
-            //if (npmScript == null) { throw new ArgumentNullException(nameof(npmScript)); }
+            if (npmScript == null) { throw new ArgumentNullException(nameof(npmScript)); }
 
             var app = endpoints.CreateApplicationBuilder();
             app.Use(next => context =>
@@ -143,7 +143,7 @@ namespace SpaCliMiddleware
 
                 if (!string.IsNullOrWhiteSpace(npmScript))
                 {
-                    opt.UseSpaCli(npmScript, port, runner, regex, forceKill, autoBuild);
+                    opt.UseSpaCli(npmScript, port, runner, regex, forceKill, useProxy);
                 }
             });
 
