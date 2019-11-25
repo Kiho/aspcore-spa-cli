@@ -41,19 +41,19 @@ namespace SpaCliMiddleware
             //   requests that go directly to the vue-cli server)
             // - given that, there's no reason to use https, and we couldn't even if we
             //   wanted to, because in general the vue-cli server has no certificate
-            var targetUriTask = portTask.ContinueWith(
-                task => new UriBuilder("http", "localhost", task.Result).Uri);
+            //var targetUriTask = portTask.ContinueWith(
+            //    task => new UriBuilder("http", "localhost", task.Result).Uri);
 
-            SpaProxyingExtensions.UseProxyToSpaDevelopmentServer(spaBuilder, () =>
-            {
-                // On each request, we create a separate startup task with its own timeout. That way, even if
-                // the first request times out, subsequent requests could still work.
-                var timeout = spaBuilder.Options.StartupTimeout;
-                return targetUriTask.WithTimeout(timeout,
-                    $"The svelte-cli server did not start listening for requests " +
-                    $"within the timeout period of {timeout.Seconds} seconds. " +
-                    $"Check the log output for error information.");
-            });
+            //SpaProxyingExtensions.UseProxyToSpaDevelopmentServer(spaBuilder, () =>
+            //{
+            //    // On each request, we create a separate startup task with its own timeout. That way, even if
+            //    // the first request times out, subsequent requests could still work.
+            //    var timeout = spaBuilder.Options.StartupTimeout;
+            //    return targetUriTask.WithTimeout(timeout,
+            //        $"The svelte-cli server did not start listening for requests " +
+            //        $"within the timeout period of {timeout.Seconds} seconds. " +
+            //        $"Check the log output for error information.");
+            //});
         }
 
         private static async Task<int> StartSpaCliServerAsync(

@@ -30,7 +30,7 @@ namespace SvelteCliSample
             services.AddControllers();
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/public";
+                configuration.RootPath = "wwwroot";
             });
         }
 
@@ -46,7 +46,7 @@ namespace SvelteCliSample
 
             app.UseSpaStaticFiles();
 
-            app.UseFileServer();
+            // app.UseFileServer();
 
             app.UseRouting();
 
@@ -61,8 +61,9 @@ namespace SvelteCliSample
                     "{*path}",
                     new SpaOptions { SourcePath = "ClientApp" },
                     npmScript: env.IsDevelopment() ? "autobuild" : null,
+                    // npmScript: null,
                     port: 5000,
-                    regex: "Your application is ready",
+                    regex: "LiveReload enabled",
                     forceKill: true
                     );
             });
