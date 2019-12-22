@@ -59,7 +59,7 @@ namespace SvelteCliSample
                     "{*path}",
                     new SpaOptions { SourcePath = "ClientApp" },
                     npmScript: env.IsDevelopment() ? "autobuild" : "",
-                    port: 35729,
+                    port: 35788, // port: 35729,
                     regex: "LiveReload enabled",
                     forceKill: true,
                     useProxy: false
