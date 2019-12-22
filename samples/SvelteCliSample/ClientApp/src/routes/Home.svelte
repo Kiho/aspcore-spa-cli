@@ -6,7 +6,7 @@
 
 <figure>
 	<img alt="Borat" src="/great-success.png">
-	<figcaption>HIGH FIVE! kkkk</figcaption>
+	<figcaption>HIGH FIVE!</figcaption>
 </figure>
 
 <p><strong>Try editing this file (routes/index.html) to test live reloading.</strong></p>

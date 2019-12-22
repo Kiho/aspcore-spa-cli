@@ -83,7 +83,7 @@ namespace SpaCliMiddleware
             };
             string nodeCmdArgs = useProxy ? "" : $"--port {portNumber:0}";
             var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, nodeCmdArgs, envVars, runner: runner);
-            // var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, null, envVars, runner: runner);
+
             AppDomain.CurrentDomain.DomainUnload += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.ProcessExit += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.UnhandledException += (s, e) => npmScriptRunner?.Kill();
