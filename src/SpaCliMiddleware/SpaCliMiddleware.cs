@@ -61,7 +61,7 @@ namespace SpaCliMiddleware
         }
 
         private static async Task<int> StartSpaCliServerAsync(
-            string sourcePath, string npmScriptName, ILogger logger, int portNumber, ScriptRunnerType runner, string regex, bool forceKill = false)
+            string sourcePath, string npmScriptName, ILogger logger, int portNumber, ScriptRunnerType runner, string regex, bool forceKill = false, bool useProxy = true)
         {            
             if (portNumber < 80)
             {
@@ -81,9 +81,9 @@ namespace SpaCliMiddleware
                 { "DEV_SERVER_PORT", portNumber.ToString() }, // vue cli 3 uses --port {number}, included below
                 { "BROWSER", "none" }, // We don't want vue-cli to open its own extra browser window pointing to the internal dev server port
             };
+            string nodeCmdArgs = useProxy ? "" : $"--port {portNumber:0}";
+            var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, nodeCmdArgs, envVars, runner: runner);
 
-            var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, $"--port {portNumber:0}", envVars, runner: runner);
-            // var npmScriptRunner = new ScriptRunner(sourcePath, npmScriptName, null, envVars, runner: runner);
             AppDomain.CurrentDomain.DomainUnload += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.ProcessExit += (s, e) => npmScriptRunner?.Kill();
             AppDomain.CurrentDomain.UnhandledException += (s, e) => npmScriptRunner?.Kill();
