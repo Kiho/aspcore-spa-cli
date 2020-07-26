@@ -2,9 +2,9 @@
   "private": true,
   "name": "svelte-demo",
   "scripts": {
-    "build": "rollup -c",
+    "dev": "svite --port 8080",
+    "build": "svite build --outDir ../wwwroot",
     "autobuild": "rollup -c -w",
-    "dev": "run-p autobuild start:dev",
     "start": "sirv public --single",
     "serve": "sirv public --dev --single",
     "start:dev": "sirv public --dev --single --port 8080"
@@ -21,6 +21,9 @@
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^4.0.2",
     "sirv-cli": "^0.4.0",
-    "svelte": "^3.6.7"
+    "svelte": "^3.24.0",
+    "svite": "^0.3.2",
+    "vite": "^1.0.0-rc.3",
+    "vite-plugin-svelte": "file:../../../../../../poc/svite/vite-plugin-svelte"
   }
 }
