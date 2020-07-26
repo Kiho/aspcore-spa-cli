@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "svelte-demo",
+  "scripts": {
+    "dev3": "svite",
+    "dev": "svite --port 8080",
+    "build": "svite build --outDir ../wwwroot",
+    "autobuild": "rollup -c -w",
+    "start": "sirv public --single",
+    "serve": "sirv public --dev --single",
+    "start:dev": "sirv public --dev --single --port 8080"
+  },
+  "dependencies": {
+    "navaid": "^1.0.2",
+    "svelte": "^3.24.0"
+  },
+  "devDependencies": {
+    "svite": "^0.3.2",
+    "vite": "1.0.0-beta.12"
+  }
+}

@@ -20,7 +20,8 @@ namespace SpaCliMiddleware
             ISpaBuilder spaBuilder,
             string scriptName, int port = 8080, ScriptRunnerType runner = ScriptRunnerType.Npm, string regex = DefaultRegex, bool forceKill = false, bool useProxy = true)
         {
-            var sourcePath = spaBuilder.Options.SourcePath;
+            string sourcePath = spaBuilder.Options.SourcePath;
+            Console.WriteLine("sourcePath", sourcePath);
             if (string.IsNullOrEmpty(sourcePath))
             {
                 throw new ArgumentException("Cannot be null or empty", nameof(sourcePath));

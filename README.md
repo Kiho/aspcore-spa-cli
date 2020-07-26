@@ -9,8 +9,10 @@ and added support for other SPA frameworks.
 
 ## Svelte
 Find the example here: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample](https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SvelteCliSample)
+HMR example with svite: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SviteSample](https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SviteSample)
 
 ## Credits
 - https://github.com/EEParker/aspnetcore-vueclimiddleware
 - https://github.com/lukeed/svelte-demo
 - https://github.com/MaximBalaganskiy/AureliaDotnetTemplate
+- https://github.com/dominikg/svite
