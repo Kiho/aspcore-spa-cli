@@ -54,6 +54,3 @@ Support HMR with [Svite](https://github.com/dominikg/svite)
                 );
             });
 ```
-
-# Know Issue
-- [HMR does not work with current version of vite](https://github.com/dominikg/svite/issues/17) 
