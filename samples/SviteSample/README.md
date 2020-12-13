@@ -1,13 +1,13 @@
 # Asp.NETCore + Svelte + Vite
 
-This repo contains an aspnetcore 3.0 + Svelte.js sample code with SpaCliMiddleware (VS2019).
+This repo contains a .NET 5.0 + Svelte.js sample code with SpaCliMiddleware (VS2019).
 Support HMR with [Svite](https://github.com/dominikg/svite)
  
 ---
 
 # Features
 
-- **ASP.NET Core 3.x**
+- **ASP.NET .NET 5.x**
   - Web API
 - **Svelte 3.x**
 - **Vite 1.x**
