@@ -1,12 +1,12 @@
 # Asp.NETCore + Svelte + Rollup
 
-This repo contains an aspnetcore 3.0 + Svelte.js sample code with SpaCliMiddleware (VS2019).
+This repo contains a .NET 5.0 + Svelte.js sample code with SpaCliMiddleware (VS2019).
  
 ---
 
 # Features
 
-- **ASP.NET Core 3.x**
+- **ASP.NET .NET 5.x**
   - Web API
 - **Svelte 3.x**
 - **Rollup 1.x**
