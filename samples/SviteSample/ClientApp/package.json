@@ -11,11 +11,11 @@
     "start:dev": "sirv public --dev --single --port 8080"
   },
   "dependencies": {
-    "navaid": "^1.0.2",
-    "svelte": "^3.24.0"
+    "navaid": "^1.2.0",
+    "svelte": "^3.31.0"
   },
   "devDependencies": {
-    "svite": "^0.4.1",
-    "vite": "1.0.0-rc.4"
+    "svite": "^0.8.1",
+    "vite": "^1.0.0-rc.9"
   }
 }
