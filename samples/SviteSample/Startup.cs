@@ -58,8 +58,8 @@ namespace SviteSample
                 endpoints.MapToSpaCliProxy(
                         "{*path}",
                         new SpaOptions { SourcePath = "ClientApp" },
-                        npmScript: "dev",
-                        port: /*default(int)*/ 8080, // Allow webpack to find own port
+                        npmScript: env.IsDevelopment() ? "dev" : "",
+                        port: /*default(int)*/ 8018, // Allow webpack to find own port
                         regex: "Dev server running at",
                         forceKill: true, // kill anything running on our webpack port
                         useProxy: true, // proxy webpack requests back through our aspnet server

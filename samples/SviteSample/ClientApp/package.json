@@ -3,12 +3,12 @@
   "name": "svelte-demo",
   "scripts": {
     "dev3": "svite",
-    "dev": "svite --port 8080",
+    "dev": "svite --port 8018",
     "build": "svite build --outDir ../wwwroot",
     "autobuild": "rollup -c -w",
     "start": "sirv public --single",
     "serve": "sirv public --dev --single",
-    "start:dev": "sirv public --dev --single --port 8080"
+    "start:dev": "sirv public --dev --single --port 8018"
   },
   "dependencies": {
     "navaid": "^1.2.0",
