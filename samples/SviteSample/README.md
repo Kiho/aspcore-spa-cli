@@ -10,7 +10,7 @@ Support HMR with [Svite](https://github.com/dominikg/svite)
 - **ASP.NET .NET 5.x**
   - Web API
 - **Svelte 3.x**
-- **Vite 1.x**
+- **Vite 2.x**
 
 # Prerequisites:
  * nodejs > 8
@@ -45,11 +45,11 @@ Support HMR with [Svite](https://github.com/dominikg/svite)
                 endpoints.MapToSpaCliProxy(
                     "{*path}",
                     new SpaOptions { SourcePath = "ClientApp" },
-                    npmScript: "dev",
-                    port: /*default(int)*/ 8080, // Allow vite to find own port
-                    regex: "Dev server running at",
-                    forceKill: true, // kill anything running on our vite port
-                    useProxy: true, // proxy vite requests back through our aspnet server
+                    npmScript: env.IsDevelopment() ? "dev" : "",
+                    port: /*default(int)*/ 8018, // Allow webpack to find own port
+                    regex: "dev server running at",
+                    forceKill: true, // kill anything running on our webpack port
+                    useProxy: true, // proxy webpack requests back through our aspnet server
                     runner: ScriptRunnerType.Npm
                 );
             });
