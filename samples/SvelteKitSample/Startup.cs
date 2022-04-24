@@ -59,8 +59,8 @@ namespace SvelteKitSample
                         "{*path}",
                         new SpaOptions { SourcePath = "ClientApp" },
                         npmScript: env.IsDevelopment() ? "dev" : "",
-                        port: /*default(int)*/ 8018, // Allow webpack to find own port
-                        regex: "dev server running at",
+                        port: /*default(int)*/ 8019, // Allow vite to find own port
+                        regex: "SvelteKit v",
                         forceKill: true, // kill anything running on our webpack port
                         useProxy: true, // proxy webpack requests back through our aspnet server
                         runner: ScriptRunnerType.Npm
