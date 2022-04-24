@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaCliMiddleware", "SpaCliMiddleware\SpaCliMiddleware.csproj", "{6EF79200-935A-4EBB-BB10-EB233A360210}"
 EndProject
@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SviteSample", "..\samples\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SvelteKitSample", "..\samples\SvelteKitSample\SvelteKitSample.csproj", "{4544970B-03DC-4D9F-BAF1-2F661479BA2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jering", "..\samples\Jering\Jering.csproj", "{19E18926-224E-4DCC-B82A-12DD7FD3196D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AureliaDotnetTemplate", "..\samples\AureliaDotnetTemplate\AureliaDotnetTemplate.csproj", "{1B38E00D-3471-4F93-BFC4-0F85810107E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jering", "..\samples\Jering\Jering.csproj", "{A614F806-A845-4B75-9928-223529C5555B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Razor", "..\samples\Razor\Razor.csproj", "{CFA61C2E-82A7-42A4-B498-1418F5A4DDF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,14 +59,18 @@ Global
 		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19E18926-224E-4DCC-B82A-12DD7FD3196D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19E18926-224E-4DCC-B82A-12DD7FD3196D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19E18926-224E-4DCC-B82A-12DD7FD3196D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19E18926-224E-4DCC-B82A-12DD7FD3196D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B38E00D-3471-4F93-BFC4-0F85810107E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B38E00D-3471-4F93-BFC4-0F85810107E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B38E00D-3471-4F93-BFC4-0F85810107E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B38E00D-3471-4F93-BFC4-0F85810107E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A614F806-A845-4B75-9928-223529C5555B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A614F806-A845-4B75-9928-223529C5555B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A614F806-A845-4B75-9928-223529C5555B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A614F806-A845-4B75-9928-223529C5555B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFA61C2E-82A7-42A4-B498-1418F5A4DDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFA61C2E-82A7-42A4-B498-1418F5A4DDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFA61C2E-82A7-42A4-B498-1418F5A4DDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFA61C2E-82A7-42A4-B498-1418F5A4DDF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,8 +80,9 @@ Global
 		{30AB1623-CB6B-4414-835E-84EF6EBE8A76} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 		{B9C4ABA2-C4F3-480A-B7DB-5B955BDABF15} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 		{4544970B-03DC-4D9F-BAF1-2F661479BA2F} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
-		{19E18926-224E-4DCC-B82A-12DD7FD3196D} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 		{1B38E00D-3471-4F93-BFC4-0F85810107E5} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
+		{A614F806-A845-4B75-9928-223529C5555B} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
+		{CFA61C2E-82A7-42A4-B498-1418F5A4DDF8} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9280CDC-FB96-4CF4-B48A-048A3355168A}

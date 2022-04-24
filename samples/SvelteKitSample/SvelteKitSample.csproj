@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SpaCliMiddleware\SpaCliMiddleware.csproj" />
-    <ProjectReference Include="..\Jering\Jering.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
