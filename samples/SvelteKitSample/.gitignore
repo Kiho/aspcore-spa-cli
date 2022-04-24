@@ -1,3 +1,4 @@
 dist/
 wwwroot/_assets
 wwwroot/index.html
+/node_modules

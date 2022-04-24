@@ -57,7 +57,7 @@ namespace SvelteKitSample
                 // Production should use "UseSpaStaticFiles()"
                 endpoints.MapToSpaCliProxy(
                         "{*path}",
-                        new SpaOptions { SourcePath = "ClientApp" },
+                        new SpaOptions { SourcePath = "Scripts" },
                         npmScript: env.IsDevelopment() ? "dev" : "",
                         port: /*default(int)*/ 8019, // Allow vite to find own port
                         regex: "SvelteKit v",
