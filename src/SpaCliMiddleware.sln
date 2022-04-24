@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AureliaDotnetTemplate", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SviteSample", "..\samples\SviteSample\SviteSample.csproj", "{B9C4ABA2-C4F3-480A-B7DB-5B955BDABF15}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SvelteKitSample", "..\samples\SvelteKitSample\SvelteKitSample.csproj", "{4544970B-03DC-4D9F-BAF1-2F661479BA2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{B9C4ABA2-C4F3-480A-B7DB-5B955BDABF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9C4ABA2-C4F3-480A-B7DB-5B955BDABF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9C4ABA2-C4F3-480A-B7DB-5B955BDABF15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4544970B-03DC-4D9F-BAF1-2F661479BA2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{30AB1623-CB6B-4414-835E-84EF6EBE8A76} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 		{AFA513F6-6A92-4552-8FCF-2315A1EF63EA} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 		{B9C4ABA2-C4F3-480A-B7DB-5B955BDABF15} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
+		{4544970B-03DC-4D9F-BAF1-2F661479BA2F} = {E0AC4E37-9F26-4CAD-A3F9-10420CB0F9E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9280CDC-FB96-4CF4-B48A-048A3355168A}

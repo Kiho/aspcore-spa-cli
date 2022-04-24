@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SpaCliMiddleware;
 
-namespace SviteSample
+namespace SvelteKitSample
 {
     public class Startup
     {

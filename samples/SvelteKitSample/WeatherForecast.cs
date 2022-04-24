@@ -1,6 +1,6 @@
 using System;
 
-namespace SviteSample
+namespace SvelteKitSample
 {
     public class WeatherForecast
     {
