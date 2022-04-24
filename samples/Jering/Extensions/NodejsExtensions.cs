@@ -116,9 +116,8 @@ namespace Jering
 			RequestOverrides? overrides = null,
 			CancellationToken cancellationToken = default)
 		{
-			// Maybe for dotnet 6.0
-			// ArgumentNullException.ThrowIfNull(nameof(nodeJSService));
-			// ArgumentNullException.ThrowIfNull(nameof(options));
+			ArgumentNullException.ThrowIfNull(nameof(nodeJSService));
+			ArgumentNullException.ThrowIfNull(nameof(options));
 
 			bool bodyOnlyReply = overrideBodyOnlyReply ?? options.BodyOnlyReply;
 
