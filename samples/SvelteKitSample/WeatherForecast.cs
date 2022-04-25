@@ -4,7 +4,7 @@ namespace dotnet
     {
         public DateTime Date { get; set; }
 
-        public string DateFormatted { get; set; }
+        public string? DateFormatted { get; set; }
 
         public int TemperatureC { get; set; }
 
