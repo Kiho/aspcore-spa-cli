@@ -1,9 +1,9 @@
 dist/
 wwwroot/_assets
 wwwroot/index.html
+.config/
+PublishProfiles/
 
 /node_modules
 /build
 .svelte-kit/
-
-PublishProfiles/
