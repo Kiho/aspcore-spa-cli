@@ -4,7 +4,7 @@ using SpaCliMiddleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddControllers();
+builder.Services.AddControllers();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -43,7 +43,7 @@ if (hostEnvironment != null)
     }
 
     app.UseEndpoints(endpoints => {
-        // endpoints.MapControllers();
+        endpoints.MapControllers();
         
         if (hostEnvironment.IsDevelopment())
         {
