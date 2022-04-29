@@ -1,15 +1,25 @@
+<script context="module" lang="ts">
+	export const prerender = true;
+  export const ssr = true;
+
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
+  export async function load({ fetch }) {
+    const url = `${SERVER_URL}/weatherforecast`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return {
+      status: response.status,
+      props: {
+        forecasts: data
+      }
+    };
+  }
+</script>
+
 <script>
-  import { onMount } from 'svelte';
-
-  export let forecasts = [];
-
-  onMount(() => {
-    fetch('/weatherforecast')
-      .then(response => response.json())
-      .then(data => {
-          forecasts = data;
-      });
-  });
+  export let forecasts;
 </script>
 
 <section>
