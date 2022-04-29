@@ -5,21 +5,19 @@
 	const pageName = 'About'
 </script>
 
+<script>
+	import NavBar from '../lib/components/NavBar.svelte';
+  import Footer from '../lib/components/Footer.svelte';
+</script>
+
 <svelte:head>
 	<title>Sveltekit Page - {pageName}</title>
 </svelte:head>
 
-
-<section> 
-	<h1>Sveltekit + dotnet - {pageName} page</h1>
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-</style>
+<NavBar />
+<div class="container">
+	<main class="pb-3">
+		<h1>Sveltekit + dotnet - {pageName} page</h1>
+	</main>
+</div>
+<Footer />

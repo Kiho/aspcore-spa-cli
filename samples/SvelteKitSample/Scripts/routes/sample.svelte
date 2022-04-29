@@ -7,7 +7,6 @@
 	<title>Sveltekit Page</title>
 </svelte:head>
 
-
 <section> 
 	<h1>Sveltekit + dotnet</h1>
 </section>
