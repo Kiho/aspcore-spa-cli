@@ -5,8 +5,10 @@ import { Server } from 'SERVER';
 import { manifest } from 'MANIFEST';
 // import { SSRManifest as manifest } from '../../node_modules/@sveltejs/kit';
 
+import { cleanup } from './cleanup';
+
 // replaced at build time
-const debug = true; // DEBUG;
+const debug = DEBUG;
 
 installFetch();
 
@@ -46,7 +48,10 @@ function toRequest(req) {
 	const { method, headers, rawBody: body } = req;
 	// because we proxy all requests to the render function, the original URL in the request is /api/__render
 	// this header contains the URL the user requested
-	const originalUrl = 'http://localhost:5004/'; // headers['x-ms-original-url'];
+  const path = req.path.substring(1);
+	const originalUrl = headers['Referer'] ? `${headers['Referer']}${path}` : 'http://localhost:5004/'; // headers['x-ms-original-url'];
+  console.log('originalUrl', originalUrl);
+  console.log('toRequest(req)', req);
 
 	/** @type {RequestInit} */
 	const init = {
@@ -96,7 +101,6 @@ if (_isDebug) {
 const HttpHandler = (
   callback, 
   origRequest) => {
-    console.log('callback', callback);
     console.log('origRequest', origRequest);
   try {
     // init({ paths: { base: '', assets: '/.' }, prerendering: true })
@@ -110,45 +114,27 @@ const HttpHandler = (
     server.respond(toRequest(origRequest))
       .then((rendered) => toResponse(rendered))
       .then((resp) => {
-          const body = new TextDecoder().decode(resp.body);
-          console.log(body);
-          if (_isDebug) {
-              _logger.write(`svelte response - ${JSON.stringify(resp)} \r\n`)
-          }
-          if (origRequest.bodyOnlyReply)
-              callback(null, body);
-          else{            
-              callback(null, {
-                  status: resp.status,
-                  headers: resp.headers,
-                  body: body
-              })
-              // callback(null, body)
-          }
+        const body = new TextDecoder().decode(resp.body);
+        console.log(body);
+        if (_isDebug) {
+          _logger.write(`svelte response - ${JSON.stringify(resp)} \r\n`)
+        }
+        if (origRequest.bodyOnlyReply)
+          callback(null, body);
+        else{            
+          callback(null, {
+            status: resp.status,
+            headers: resp.headers,
+            body: body
+          })
+        }
       })
       .catch((err) => callback(err, null));
-
-    // const rendered = await server.respond(origRequest);
-    // const response = await toResponse(rendered);
-
-    // if (_isDebug) {
-    //   _logger.write(`svelte response - ${JSON.stringify(resp)} \r\n`);
-    // }
-
-    // if (origRequest.bodyOnlyReply) {      
-    //   callback(null, (response).body);
-    // }
-    // else {      
-    //   // callback(null, {
-    //   //     status: resp.status,
-    //   //     headers: resp.headers,
-    //   //     body: resp.body
-    //   // })
-    //   callback(null, response)
-    // }
   } catch (err) {
     callback(err, null)
   }
 };
+
+cleanup(_logger);
 
 module.exports = HttpHandler;

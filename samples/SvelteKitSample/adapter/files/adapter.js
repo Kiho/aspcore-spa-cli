@@ -44,9 +44,17 @@ export default function ({
     const adapter = {
         name: '@sveltejs/adapter-dotnetcore',
         adapt: async (builder) => {
-            //utils.update_ignores({ patterns: [out] });
-            builder.log.minor('Copying assets')
-            const static_directory = join(out, 'assets')
+          const tmp = '.svelte-kit/dotnetcore';
+          const entry = `${tmp}/entry.js`;
+
+          //utils.update_ignores({ patterns: [out] });
+          builder.log.minor('Copying assets');
+          const static_directory = join(out, 'assets');
+
+
+
+          builder.rimraf(tmp);
+          builder.rimraf(static_directory);
 
             builder.writeStatic(static_directory);
             builder.writeClient(static_directory);
@@ -56,11 +64,9 @@ export default function ({
             const files = fileURLToPath(new URL('./', import.meta.url));
             builder.copy(files, '.svelte-kit/dotnetcore');
 
-            const tmp = '.svelte-kit/dotnetcore';
-            const entry = `${tmp}/entry.js`;
             let relativePath = '../output/server'; // posix.relative(tmp, builder.getServerDirectory());
-
             console.log('relativePath: ', relativePath);
+            builder.rimraf(relativePath);
 
             builder.copy(join(files, 'entry.js'), entry, {
               replace: {
