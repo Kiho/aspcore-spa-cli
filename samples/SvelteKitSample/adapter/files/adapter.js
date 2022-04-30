@@ -56,9 +56,31 @@ export default function ({
             const files = fileURLToPath(new URL('./', import.meta.url));
             builder.copy(files, '.svelte-kit/dotnetcore');
 
+            const tmp = '.svelte-kit/dotnetcore';
+            const entry = `${tmp}/entry.js`;
+            let relativePath = '../output/server'; // posix.relative(tmp, builder.getServerDirectory());
+
+            console.log('relativePath: ', relativePath);
+
+            builder.copy(join(files, 'entry.js'), entry, {
+              replace: {
+                SERVER: `${relativePath}/index.js`,
+                MANIFEST: './manifest.js',
+                DEBUG: debug.toString()
+              }
+            });
+
+            writeFileSync(
+              `${tmp}/manifest.js`,
+              `export const manifest = ${builder.generateManifest({
+                relativePath
+              })};\n`
+            );
+            
             const defaultOptions = {
                 //entryPoints: ['.svelte-kit/node/index.js'],
-                entryPoints: ['.svelte-kit/dotnetcore/entry.js'],
+                // entryPoints: ['.svelte-kit/dotnetcore/entry.js'],
+                entryPoints: [entry],
                 outfile: join(out, 'index.cjs'),
                 bundle: true,
                 external: Object.keys(JSON.parse(readFileSync('package.json', 'utf8')).dependencies || {}),
