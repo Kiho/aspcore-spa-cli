@@ -2,49 +2,19 @@ import esbuild from 'esbuild';
 import {
   writeFileSync, readFileSync
 } from 'fs';
-import { join, posix } from 'path';
+import { join } from 'path';
 import { fileURLToPath, URL } from 'url';
-
-// import { Adapter, Builder } from '@sveltejs/kit';
-
-// type BuilderFix = Builder & {
-//     utils: {
-//         log: {
-//             minor: (a:string) => ""
-//         },
-//         copy: (a:string, b:string) => "",
-//         copy_client_files: (a: string) => "",
-//         copy_static_files: (a: string) => "",
-//     },
-//     config: {
-//         kit: {
-//             appDir: string
-//         }
-//     }
-// } 
-
-// type esBuildOptions = esbuild.BuildOptions;
-
-// type adapterOptions = {
-//     out: string,
-//     precompress: boolean,
-//     env?: {
-//         host?: string,
-//         port?: string
-//     },
-//     esbuildOptsFunc?: (defaultOptions: esBuildOptions) => Promise<esBuildOptions>
-// }
 
 export default function ({
   out = 'build',
-  //precompress = false, //compression will be done in dotnetcore for performance
+  //precompress = false, //compression will be done in aspcore for performance
   esbuildOptsFunc = null,		
   debug = true,
 }) {
   const adapter = {
-    name: '@sveltejs/adapter-dotnetcore',
+    name: '@sveltejs/adapter-aspcore',
     adapt: async (builder) => {
-      const tmp = '.svelte-kit/dotnetcore';
+      const tmp = '.svelte-kit/aspcore';
       const entry = `${tmp}/entry.js`;
       const static_directory = join(out, 'assets');
 
@@ -95,7 +65,7 @@ export default function ({
       builder.writeClient(static_directory);
       builder.writePrerendered(static_directory);
 
-      // TBD - Add prerender here; prerendering requires a live dotnetcore 
+      // TBD - Add prerender here; prerendering requires a live aspcore 
       //       server, need to put a bit of thought how it should be setup
       //
       //utils.log.minor('Prerendering static pages');

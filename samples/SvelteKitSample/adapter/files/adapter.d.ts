@@ -1,9 +1,12 @@
 import { Adapter } from '@sveltejs/kit';
-// import { CustomStaticWebAppConfig } from './types/swa';
+import esbuild from 'esbuild';
+
+type esBuildOptions = esbuild.BuildOptions;
 
 declare function plugin(opts?: {
   out?: string,
 	debug?: boolean;
-	// customStaticWebAppConfig?: CustomStaticWebAppConfig;
+	esbuildOptsFunc?: (defaultOptions: esBuildOptions) => Promise<esBuildOptions>;
 }): Adapter;
+
 export = plugin;
