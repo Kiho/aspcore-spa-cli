@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
-	export const prerender = true;
-  export const ssr = true;
+	export const prerender = false; // true;
 
 	const pageName = 'About'
 </script>

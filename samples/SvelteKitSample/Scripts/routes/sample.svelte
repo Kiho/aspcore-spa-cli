@@ -1,8 +1,3 @@
-<script context="module" lang="ts">
-	export const prerender = true;
-    export const ssr = true;
-</script>
-
 <svelte:head>
 	<title>Sveltekit Page</title>
 </svelte:head>

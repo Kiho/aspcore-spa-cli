@@ -35,16 +35,10 @@ app.MapRazorPages();
 
 if (hostEnvironment != null)
 {
-    if (!hostEnvironment.IsDevelopment())
+    app.UseEndpoints(endpoints =>
     {
-        // Add 
-        app.UseNodejsService(hostEnvironment);
-        app.UseMiddleware<NodejsMiddleware>();
-    }
-
-    app.UseEndpoints(endpoints => {
         endpoints.MapControllers();
-        
+
         if (hostEnvironment.IsDevelopment())
         {
             // Note: only use spacliproxy in development. 
@@ -61,6 +55,13 @@ if (hostEnvironment != null)
             );
         }
     });
+
+    if (!hostEnvironment.IsDevelopment())
+    {
+        // Add 
+        app.UseNodejsService(hostEnvironment);
+        app.UseMiddleware<NodejsMiddleware>();
+    }
 }
 
 app.Run();
