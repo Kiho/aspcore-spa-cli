@@ -51,7 +51,7 @@ function toRequest(req) {
   // const path = req.path.substring(1);
 	// const originalUrl = headers['Referer'] ? `${headers['Referer']}${path}` : 'http://localhost:5004/'; // headers['x-ms-original-url'];
 
-  originalUrl = url;
+  originalUrl = url; // + (url.indexOf('.') > -1 ? '' : '.html');
   console.log('originalUrl', originalUrl);
 	/** @type {RequestInit} */
 	const init = {
@@ -90,6 +90,7 @@ async function toResponse(rendered) {
 
 const _isDebug = process.env.NODE_ENV === 'development';
 const _encoder = new TextEncoder();
+const _decoder = new TextDecoder();
 let _logger = null;
 
 if (_isDebug) {
@@ -101,7 +102,7 @@ if (_isDebug) {
 const HttpHandler = (
   callback, 
   origRequest) => {
-    console.log('origRequest', origRequest);
+    // console.log('origRequest', origRequest);
   try {
     // init({ paths: { base: '', assets: '/.' }, prerendering: true })
     // origRequest.query = new URLSearchParams(origRequest.queryString)
@@ -114,15 +115,18 @@ const HttpHandler = (
     const req = toRequest(origRequest);
     server.respond(req)
       .then((rendered) => toResponse(rendered))
-      .then((resp) => {
-        const body = new TextDecoder().decode(resp.body);
-        console.log(body);
+      .then((resp) => {        
         if (_isDebug) {
           _logger.write(`svelte response - ${JSON.stringify(resp)} \r\n`)
         }
         if (origRequest.bodyOnlyReply)
           callback(null, body);
-        else{            
+        else{
+          if (resp.status == 404) {
+            return callback(null, null);
+          } 
+          const body = _decoder.decode(resp.body);
+          console.log(body);          
           callback(null, {
             status: resp.status,
             headers: resp.headers,

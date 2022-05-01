@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export const prerender = true;
+	export const prerender = false; // true;
   
   const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
