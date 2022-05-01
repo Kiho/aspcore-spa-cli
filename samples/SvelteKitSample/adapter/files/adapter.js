@@ -36,81 +36,79 @@ import { fileURLToPath, URL } from 'url';
 // }
 
 export default function ({
-    out = 'build',
-    //precompress = false, //compression will be done in dotnetcore for performance
-    esbuildOptsFunc = null,		
-		debug = true,
+  out = 'build',
+  //precompress = false, //compression will be done in dotnetcore for performance
+  esbuildOptsFunc = null,		
+  debug = true,
 }) {
-    const adapter = {
-        name: '@sveltejs/adapter-dotnetcore',
-        adapt: async (builder) => {
-          const tmp = '.svelte-kit/dotnetcore';
-          const entry = `${tmp}/entry.js`;
+  const adapter = {
+    name: '@sveltejs/adapter-dotnetcore',
+    adapt: async (builder) => {
+      const tmp = '.svelte-kit/dotnetcore';
+      const entry = `${tmp}/entry.js`;
+      const static_directory = join(out, 'assets');
 
-          builder.log.minor('Copying assets');
-          const static_directory = join(out, 'assets');
+      builder.rimraf(tmp);
+      builder.rimraf(static_directory);
 
-          builder.rimraf(tmp);
-          builder.rimraf(static_directory);
+      builder.log.minor('Building server');
+      // const files = fileURLToPath(new URL('./files', import.meta.url));
+      const files = fileURLToPath(new URL('./', import.meta.url));
+      builder.copy(files, tmp);
 
-            builder.log.minor('Building server');
-            // const files = fileURLToPath(new URL('./files', import.meta.url));
-            const files = fileURLToPath(new URL('./', import.meta.url));
-            builder.copy(files, tmp);
+      let relativePath = '../output/server';
+      builder.rimraf(relativePath);
 
-            let relativePath = '../output/server'; // posix.relative(tmp, builder.getServerDirectory());
-            console.log('relativePath: ', relativePath);
-            builder.rimraf(relativePath);
-
-            builder.copy(join(files, 'entry.js'), entry, {
-              replace: {
-                SERVER: `${relativePath}/index.js`,
-                MANIFEST: './manifest.js',
-                DEBUG: debug.toString()
-              }
-            });
-
-            writeFileSync(
-              `${tmp}/manifest.js`,
-              `export const manifest = ${builder.generateManifest({
-                relativePath
-              })};\n`
-            );
-            
-            const defaultOptions = {
-                entryPoints: [entry],
-                outfile: join(out, 'index.cjs'),
-                bundle: true,
-                external: Object.keys(JSON.parse(readFileSync('package.json', 'utf8')).dependencies || {}),
-                format: 'cjs',
-                platform: 'node',
-                target: 'node12',
-                define: {
-                    esbuild_app_dir: '"' + builder.config.kit.appDir + '"'
-                }
-            };
-            
-            const buildOptions = esbuildOptsFunc ? await esbuildOptsFunc(defaultOptions) : defaultOptions;
-            await esbuild.build(buildOptions);
-
-            builder.writeStatic(static_directory);
-            builder.writeClient(static_directory);
-            builder.writePrerendered(static_directory);
-
-            // TBD - Add prerender here; prerendering requires a live dotnetcore 
-            //       server, need to put a bit of thought how it should be setup
-            //
-            //utils.log.minor('Prerendering static pages');
-            // await utils.prerender({
-            //     dest: `${out}/prerendered`
-            // });
-            // if (precompress && existsSync(`${out}/prerendered`)) {
-            //     utils.log.minor('Compressing prerendered pages');
-            //     await compress(`${out}/prerendered`);
-            // }   await compress(`${out}/prerendered`);
-            // }
+      builder.copy(join(files, 'entry.js'), entry, {
+        replace: {
+          SERVER: `${relativePath}/index.js`,
+          MANIFEST: './manifest.js',
+          DEBUG: debug.toString()
         }
-    };
+      });
 
-    return adapter;
+      writeFileSync(
+        `${tmp}/manifest.js`,
+        `export const manifest = ${builder.generateManifest({
+          relativePath
+        })};\n`
+      );
+      
+      const defaultOptions = {
+        entryPoints: [entry],
+        outfile: join(out, 'index.cjs'),
+        bundle: true,
+        external: Object.keys(JSON.parse(readFileSync('package.json', 'utf8')).dependencies || {}),
+        format: 'cjs',
+        platform: 'node',
+        target: 'node12',
+        define: {
+            esbuild_app_dir: '"' + builder.config.kit.appDir + '"'
+        }
+      };
+      
+      const buildOptions = esbuildOptsFunc ? await esbuildOptsFunc(defaultOptions) : defaultOptions;
+      await esbuild.build(buildOptions);
+
+      builder.log.minor('Copying assets');
+      builder.writeStatic(static_directory);
+      builder.writeClient(static_directory);
+      builder.writePrerendered(static_directory);
+
+      // TBD - Add prerender here; prerendering requires a live dotnetcore 
+      //       server, need to put a bit of thought how it should be setup
+      //
+      //utils.log.minor('Prerendering static pages');
+      // await utils.prerender({
+      //     dest: `${out}/prerendered`
+      // });
+      // if (precompress && existsSync(`${out}/prerendered`)) {
+      //     utils.log.minor('Compressing prerendered pages');
+      //     await compress(`${out}/prerendered`);
+      // }   await compress(`${out}/prerendered`);
+      // }
+    }
+  };
+
+  return adapter;
 }
