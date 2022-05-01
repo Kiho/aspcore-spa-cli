@@ -47,20 +47,16 @@ export default function ({
           const tmp = '.svelte-kit/dotnetcore';
           const entry = `${tmp}/entry.js`;
 
-          //utils.update_ignores({ patterns: [out] });
           builder.log.minor('Copying assets');
           const static_directory = join(out, 'assets');
-
-
 
           builder.rimraf(tmp);
           builder.rimraf(static_directory);
 
-
             builder.log.minor('Building server');
-            //const files = fileURLToPath(new URL('./files', import.meta.url));
+            // const files = fileURLToPath(new URL('./files', import.meta.url));
             const files = fileURLToPath(new URL('./', import.meta.url));
-            builder.copy(files, '.svelte-kit/dotnetcore');
+            builder.copy(files, tmp);
 
             let relativePath = '../output/server'; // posix.relative(tmp, builder.getServerDirectory());
             console.log('relativePath: ', relativePath);
@@ -82,8 +78,6 @@ export default function ({
             );
             
             const defaultOptions = {
-                //entryPoints: ['.svelte-kit/node/index.js'],
-                // entryPoints: ['.svelte-kit/dotnetcore/entry.js'],
                 entryPoints: [entry],
                 outfile: join(out, 'index.cjs'),
                 bundle: true,
@@ -91,12 +85,11 @@ export default function ({
                 format: 'cjs',
                 platform: 'node',
                 target: 'node12',
-                // inject: [join(files, 'shims.js')],
                 define: {
-                    //esbuild_app_dir: '"' + config.kit.appDir + '"'
                     esbuild_app_dir: '"' + builder.config.kit.appDir + '"'
                 }
             };
+            
             const buildOptions = esbuildOptsFunc ? await esbuildOptsFunc(defaultOptions) : defaultOptions;
             await esbuild.build(buildOptions);
 

@@ -32,9 +32,8 @@ function toRequest(req) {
 	const { method, headers, rawBody: body, url: originalUrl } = req;
 	// because we proxy all requests to the render function, the original URL in the request is /api/__render
 	// this header contains the URL the user requested
-  // const path = req.path.substring(1);
-	// const originalUrl = headers['Referer'] ? `${headers['Referer']}${path}` : 'http://localhost:5004/'; // headers['x-ms-original-url'];
-  console.log('originalUrl', originalUrl);
+	// const originalUrl = headers['x-ms-original-url'];
+  // console.log('originalUrl', originalUrl);
 	/** @type {RequestInit} */
 	const init = {
 		method,
@@ -76,7 +75,6 @@ async function toResponse(rendered) {
 const HttpHandler = (
   callback, 
   origRequest) => {
-    // console.log('origRequest', origRequest);
   try {
     // init({ paths: { base: '', assets: '/.' }, prerendering: true })
     // origRequest.query = new URLSearchParams(origRequest.queryString)
@@ -107,5 +105,3 @@ const HttpHandler = (
 cleanup(_logger);
 
 module.exports = HttpHandler;
-
-// http://localhost:5004/weatherforecast
