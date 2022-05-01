@@ -1,8 +1,8 @@
 # Asp.NETCore + Svelte-Kit
 
-This repo contains a .NET 6.0 + Svelte-Kit sample code with SpaCliMiddleware (VS2019) in development.
+This repo contains a .NET 6.0 + Svelte-Kit sample code with SpaCliMiddleware (VS2022) in development.
 
-Use [sveltekit-adapter-dotnetcore](https://github.com/samlam/sveltekit-adapter-dotnetcore) in production.
+Use [svelte-adapter-aspcore](https://github.com/kiho/svelte-adapter-aspcore) in production.
 
 ---
 
@@ -11,7 +11,7 @@ Use [sveltekit-adapter-dotnetcore](https://github.com/samlam/sveltekit-adapter-d
 - **ASP.NET .NET 6.x**
   - Web API
 - **Svelte-Kit**
-- **sveltekit-adapter-dotnetcore**
+- **svelte-adapter-aspcore**
 
 # Prerequisites:
  * nodejs > 14
