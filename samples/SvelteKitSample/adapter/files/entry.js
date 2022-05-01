@@ -1,4 +1,4 @@
-import { WriteStream, createWriteStream } from 'fs';
+import { createWriteStream } from 'fs';
 import { installFetch } from '@sveltejs/kit/install-fetch';
 import { Server } from 'SERVER';
 // export { Server } from '../output/server/index.js';
@@ -8,50 +8,32 @@ import { manifest } from 'MANIFEST';
 import { cleanup } from './cleanup';
 
 // replaced at build time
-const debug = DEBUG;
+const _isDebug = DEBUG;
 
 installFetch();
 
 const server = new Server(manifest);
 
-/**
- * @typedef {import('@azure/functions').AzureFunction} AzureFunction
- * @typedef {import('@azure/functions').Context} Context
- * @typedef {import('@azure/functions').HttpRequest} HttpRequest
- */
+console.log('_isDebug', _isDebug);
+// const _isDebug = process.env.NODE_ENV === 'development';
+const _decoder = new TextDecoder();
+let _logger = null;
 
-/**
- * @param {Context} context
- */
-async function index(context) {
-	const request = toRequest(context);
-
-	if (debug) {
-		context.log(`Request: ${JSON.stringify(request)}`);
-	}
-
-	const rendered = await server.respond(request);
-	const response = await toResponse(rendered);
-
-	if (debug) {
-		context.log(`Response: ${JSON.stringify(response)}`);
-	}
-
-	context.res = response;
+if (_isDebug) {
+    const logPath = __dirname + '/debug.log';
+    console.info(`log path : ${logPath}`);
+    _logger = createWriteStream(logPath, {flags : 'w'});
 }
 
 /**
- * @param {Context} context
  * @returns {Request}
  * */
 function toRequest(req) {
-	const { method, headers, rawBody: body, url } = req;
+	const { method, headers, rawBody: body, url: originalUrl } = req;
 	// because we proxy all requests to the render function, the original URL in the request is /api/__render
 	// this header contains the URL the user requested
   // const path = req.path.substring(1);
 	// const originalUrl = headers['Referer'] ? `${headers['Referer']}${path}` : 'http://localhost:5004/'; // headers['x-ms-original-url'];
-
-  originalUrl = url; // + (url.indexOf('.') > -1 ? '' : '.html');
   console.log('originalUrl', originalUrl);
 	/** @type {RequestInit} */
 	const init = {
@@ -72,6 +54,9 @@ function toRequest(req) {
  */
 async function toResponse(rendered) {
 	const { status } = rendered;
+  if (status == 404) {
+    return null;
+  }
 	const resBody = new Uint8Array(await rendered.arrayBuffer());
 
 	/** @type {Record<string, string>} */
@@ -82,21 +67,10 @@ async function toResponse(rendered) {
 
 	return {
 		status,
-		body: resBody,
+		body: _decoder.decode(resBody),
 		headers: resHeaders,
 		isRaw: true
 	};
-}
-
-const _isDebug = process.env.NODE_ENV === 'development';
-const _encoder = new TextEncoder();
-const _decoder = new TextDecoder();
-let _logger = null;
-
-if (_isDebug) {
-    const logPath = __dirname + '/debug.log';
-    console.info(`log path : ${logPath}`);
-    _logger = createWriteStream(logPath, {flags : 'w'});
 }
 
 const HttpHandler = (
@@ -107,7 +81,6 @@ const HttpHandler = (
     // init({ paths: { base: '', assets: '/.' }, prerendering: true })
     // origRequest.query = new URLSearchParams(origRequest.queryString)
     // origRequest.rawBody = _encoder.encode(origRequest.body)
-
     if (_isDebug) {
       _logger.write(`svelte request payload - ${JSON.stringify(origRequest)} \r\n`)
     }
@@ -119,19 +92,10 @@ const HttpHandler = (
         if (_isDebug) {
           _logger.write(`svelte response - ${JSON.stringify(resp)} \r\n`)
         }
-        if (origRequest.bodyOnlyReply)
-          callback(null, body);
-        else{
-          if (resp.status == 404) {
-            return callback(null, null);
-          } 
-          const body = _decoder.decode(resp.body);
-          console.log(body);          
-          callback(null, {
-            status: resp.status,
-            headers: resp.headers,
-            body: body
-          })
+        if (origRequest.bodyOnlyReply){
+          callback(null, resp?.body);
+        } else {
+          callback(null, resp);
         }
       })
       .catch((err) => callback(err, null));
@@ -143,3 +107,5 @@ const HttpHandler = (
 cleanup(_logger);
 
 module.exports = HttpHandler;
+
+// http://localhost:5004/weatherforecast
