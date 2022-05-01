@@ -16,10 +16,10 @@ export default function ({
     adapt: async (builder) => {
       const tmp = '.svelte-kit/aspcore';
       const entry = `${tmp}/entry.js`;
-      const static_directory = join(out, 'assets');
+      const staticDirectory = join(out, 'assets');
 
       builder.rimraf(tmp);
-      builder.rimraf(static_directory);
+      builder.rimraf(staticDirectory);
 
       builder.log.minor('Building server');
       // const files = fileURLToPath(new URL('./files', import.meta.url));
@@ -58,9 +58,9 @@ export default function ({
       await esbuild.build(buildOptions);
 
       builder.log.minor('Copying assets');
-      builder.writeStatic(static_directory);
-      builder.writeClient(static_directory);
-      builder.writePrerendered(static_directory);
+      builder.writeStatic(staticDirectory);
+      builder.writeClient(staticDirectory);
+      builder.writePrerendered(staticDirectory);
 
       // TBD - Add prerender here; prerendering requires a live aspcore 
       //       server, need to put a bit of thought how it should be setup
