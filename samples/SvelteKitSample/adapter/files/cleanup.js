@@ -1,5 +1,3 @@
-import { WriteStream } from 'fs'
-
 let _logger = null;
 
 function exitHandler(options, exitCode) {

@@ -1,9 +1,8 @@
 import { createWriteStream } from 'fs';
 import { installFetch } from '@sveltejs/kit/install-fetch';
+
 import { Server } from 'SERVER';
-// export { Server } from '../output/server/index.js';
 import { manifest } from 'MANIFEST';
-// import { SSRManifest as manifest } from '../../node_modules/@sveltejs/kit';
 
 import { cleanup } from './cleanup';
 
@@ -12,10 +11,8 @@ const _isDebug = DEBUG;
 
 installFetch();
 
-const server = new Server(manifest);
+const _server = new Server(manifest);
 
-console.log('_isDebug', _isDebug);
-// const _isDebug = process.env.NODE_ENV === 'development';
 const _decoder = new TextDecoder();
 let _logger = null;
 
@@ -84,7 +81,7 @@ const HttpHandler = (
     }
 
     const req = toRequest(origRequest);
-    server.respond(req)
+    _server.respond(req)
       .then((rendered) => toResponse(rendered))
       .then((resp) => {        
         if (_isDebug) {
