@@ -1,7 +1,7 @@
 // @ts-ignore
 // import adapter from 'sveltekit-adapter-dotnetcore';
 import preprocess from 'svelte-preprocess';
-// import adapter from '@sveltejs/adapter-auto';
+// import adapter from '@sveltejs/adapter-node';
 import adapter from './adapter/index.js';
 
 /** @type {import('@sveltejs/kit').Config} */

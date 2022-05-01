@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Jering.Javascript.NodeJS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -217,6 +218,7 @@ namespace Jering
 		private static async ValueTask<INodejsRequest> SetupRequest(HttpContext context, bool bodyOnlyReply, RequestOverrides? overrides = null)
 		{
 			HttpRequest request = context.Request;
+			string url = context.Request.GetEncodedUrl();
 			IDictionary<string, string> headers = context.Request.Headers
 				.ToDictionary(k => k.Key.StartsWith(':') ? k.Key[1..] : k.Key, v => v.Value.ToString());
 			NodejsDefaultRequest req = new(
@@ -224,7 +226,8 @@ namespace Jering
 				headers,
 				overrides == null ? request.Path : overrides.Path,
 				request.QueryString.ToString(),
-				request.Host.ToString());
+				request.Host.ToString(), 
+				url);
 
 			if (request.ContentLength > 0)
 			{

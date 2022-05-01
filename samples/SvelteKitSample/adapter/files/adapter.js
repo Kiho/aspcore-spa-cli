@@ -56,8 +56,6 @@ export default function ({
           builder.rimraf(tmp);
           builder.rimraf(static_directory);
 
-            builder.writeStatic(static_directory);
-            builder.writeClient(static_directory);
 
             builder.log.minor('Building server');
             //const files = fileURLToPath(new URL('./files', import.meta.url));
@@ -101,6 +99,10 @@ export default function ({
             };
             const buildOptions = esbuildOptsFunc ? await esbuildOptsFunc(defaultOptions) : defaultOptions;
             await esbuild.build(buildOptions);
+
+            builder.writeStatic(static_directory);
+            builder.writeClient(static_directory);
+            builder.writePrerendered(static_directory);
 
             // TBD - Add prerender here; prerendering requires a live dotnetcore 
             //       server, need to put a bit of thought how it should be setup

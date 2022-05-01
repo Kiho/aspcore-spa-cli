@@ -40,22 +40,29 @@ namespace Jering
 		/// </summary>
 		public bool BodyOnlyReply { get; set; } = true;
 
-		public NodejsDefaultRequest(string method, string path, string queryString, string host)
+		/// <summary>
+		/// Gets or sets url.
+		/// </summary>
+		public string? Url { get; set; }
+
+		public NodejsDefaultRequest(string method, string path, string queryString, string host, string url)
 		{
 			Method = method;
 			Headers = new Dictionary<string, string>();
 			Path = path;
 			QueryString = queryString;
 			Host = host;
+			Url = url;
 		}
 
-		public NodejsDefaultRequest(string method, IDictionary<string, string> headers, string path, string queryString, string host)
+		public NodejsDefaultRequest(string method, IDictionary<string, string> headers, string path, string queryString, string host, string url)
 		{
 			Method = method;
 			Headers = headers;
 			Path = path;
 			QueryString = queryString;
 			Host = host;
+			Url = url;
 		}
 	}
 }

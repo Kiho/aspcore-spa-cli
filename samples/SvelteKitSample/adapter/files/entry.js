@@ -45,14 +45,14 @@ async function index(context) {
  * @returns {Request}
  * */
 function toRequest(req) {
-	const { method, headers, rawBody: body } = req;
+	const { method, headers, rawBody: body, url } = req;
 	// because we proxy all requests to the render function, the original URL in the request is /api/__render
 	// this header contains the URL the user requested
-  const path = req.path.substring(1);
-	const originalUrl = headers['Referer'] ? `${headers['Referer']}${path}` : 'http://localhost:5004/'; // headers['x-ms-original-url'];
-  console.log('originalUrl', originalUrl);
-  console.log('toRequest(req)', req);
+  // const path = req.path.substring(1);
+	// const originalUrl = headers['Referer'] ? `${headers['Referer']}${path}` : 'http://localhost:5004/'; // headers['x-ms-original-url'];
 
+  originalUrl = url;
+  console.log('originalUrl', originalUrl);
 	/** @type {RequestInit} */
 	const init = {
 		method,
@@ -111,7 +111,8 @@ const HttpHandler = (
       _logger.write(`svelte request payload - ${JSON.stringify(origRequest)} \r\n`)
     }
 
-    server.respond(toRequest(origRequest))
+    const req = toRequest(origRequest);
+    server.respond(req)
       .then((rendered) => toResponse(rendered))
       .then((resp) => {
         const body = new TextDecoder().decode(resp.body);

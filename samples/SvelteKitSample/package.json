@@ -25,6 +25,7 @@
     "npm": ">=7.9.0"
   },
   "devDependencies": {
+    "@sveltejs/adapter-node": "1.0.0-next.73",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.4.1",
     "esbuild": "^0.13.14",
@@ -35,5 +36,9 @@
     "sveltekit-adapter-dotnetcore": "^0.1.2",
     "tslib": "^2.4.0",
     "typescript": "4.6.4"
+  },
+  "dependencies": {
+    "@lukeed/uuid": "^2.0.0",
+    "cookie": "^0.4.1"
   }
 }
