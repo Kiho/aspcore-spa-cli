@@ -52,9 +52,6 @@ export default function ({
         format: 'cjs',
         platform: 'node',
         target: 'node12',
-        define: {
-            esbuild_app_dir: '"' + builder.config.kit.appDir + '"'
-        }
       };
       
       const buildOptions = esbuildOptsFunc ? await esbuildOptsFunc(defaultOptions) : defaultOptions;
