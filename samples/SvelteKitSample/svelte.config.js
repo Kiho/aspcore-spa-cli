@@ -4,7 +4,6 @@ import adapter from 'svelte-adapter-aspcore';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: preprocess(),
-
 	kit: {		
     files: {
 			assets: 'Assets',
@@ -14,7 +13,7 @@ const config = {
 			serviceWorker: 'Scripts/service-worker',
 			template: 'Scripts/app.html'
 		},
-		adapter: adapter({ out : 'build', precompress : false})
+		adapter: adapter({ out : 'build' }),
 	},
 	compilerOptions: {
 		hydratable: true,

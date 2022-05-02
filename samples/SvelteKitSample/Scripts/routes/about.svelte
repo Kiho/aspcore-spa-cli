@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-	export const prerender = false; // true;
-
 	const pageName = 'About'
 </script>
 
