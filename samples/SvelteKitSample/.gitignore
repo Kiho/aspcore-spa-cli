@@ -6,4 +6,5 @@ PublishProfiles/
 
 /node_modules
 /build
-/.svelte-kit/
+/.svelte-kit
+/_js
