@@ -12,8 +12,11 @@ Find the example here: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samp
 
 HMR example with svite: [https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SviteSample](https://github.com/Kiho/aspcore-spa-cli/tree/master/samples/SviteSample)
 
+SvelteKit example: [https://github.com/Kiho/aspcore-spa-cli/tree/dotnet-6/samples/SvelteKitSample](https://github.com/Kiho/aspcore-spa-cli/tree/dotnet-6/samples/SvelteKitSample)
+
 ## Credits
 - https://github.com/EEParker/aspnetcore-vueclimiddleware
 - https://github.com/lukeed/svelte-demo
 - https://github.com/MaximBalaganskiy/AureliaDotnetTemplate
 - https://github.com/dominikg/svite
+- https://github.com/samlam/sveltekit-adapter-dotnetcore
