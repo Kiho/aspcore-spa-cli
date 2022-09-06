@@ -53,7 +53,7 @@ namespace Jering
 				_Logger.LogInformation($"{nameof(NodejsMiddleware)} is invoked for {context.Request.Path}");
 
 			NodejsResponse? result = await _NodeJSService
-				.InvokeNodejsService(_NodejsOptions.CurrentValue, context, _ShouldGzipCompress, false, null, context.RequestAborted).ConfigureAwait(false);
+				.InvokeNodejsService(_NodejsOptions.CurrentValue, context, _ShouldGzipCompress, true, null, context.RequestAborted).ConfigureAwait(false);
 
 			if (result == null || result.Status == 404)
 			{
@@ -70,7 +70,7 @@ namespace Jering
 				httpResp.Headers.Append(keyValuePair.Key, new Microsoft.Extensions.Primitives.StringValues(keyValuePair.Value));
 			}
 
-			if (result.BodyStream == null || result.BodyStream.Length == 0)
+			if (result.BodyStream == null)
 				return;
 
 			if (_ShouldGzipCompress)
