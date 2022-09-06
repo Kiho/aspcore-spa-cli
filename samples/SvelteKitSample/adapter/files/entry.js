@@ -51,20 +51,24 @@ const HttpHandler = (
     const req = toRequest(origRequest);
     _server.respond(req)
       .then((resp) => {        
-        if (_isDebug) {
-          _logger.write(`svelte response - ${JSON.stringify(resp?.body)} \r\n`)
-        }
-        if (origRequest.bodyOnlyReply){
-          callback(null, resp?.body);
-        } else {
-          resp.text().then((data) => {
-            callback(null, {
-              status: resp.status,
-              headers: resp.headers,
-              body: data
-            })
-          });
-        }
+        if (resp.status == 404) {
+					callback(null, null);
+				} else {
+					if (_isDebug) {
+						_logger.write(`svelte response - ${JSON.stringify(resp?.body)} \r\n`)
+					}
+					if (origRequest.bodyOnlyReply){
+						callback(null, resp?.body);
+					} else {
+						resp.text().then((data) => {
+							callback(null, {
+								status: resp.status,
+								headers: resp.headers,
+								body: data
+							})
+						});
+					}
+				}
       })
       .catch((err) => callback(err, null));
   } catch (err) {
