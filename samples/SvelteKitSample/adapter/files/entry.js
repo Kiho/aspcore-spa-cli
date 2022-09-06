@@ -13,7 +13,6 @@ installFetch();
 
 const _server = new Server(manifest);
 
-const _decoder = new TextDecoder();
 let _logger = null;
 
 if (_isDebug) {
@@ -27,9 +26,6 @@ if (_isDebug) {
  * */
 function toRequest(req) {
 	const { method, headers, rawBody: body, url: originalUrl } = req;
-	// because we proxy all requests to the render function, the original URL in the request is /api/__render
-	// this header contains the URL the user requested
-	// const originalUrl = headers['x-ms-original-url'];
   // console.log('originalUrl', originalUrl);
 	/** @type {RequestInit} */
 	const init = {
@@ -44,53 +40,30 @@ function toRequest(req) {
 	return new Request(originalUrl, init);
 }
 
-/**
- * @param {Response} rendered
- * @returns {Promise<Record<string, any>>}
- */
-async function toResponse(rendered) {
-	const { status } = rendered;
-  if (status == 404) {
-    return null;
-  }
-	const resBody = new Uint8Array(await rendered.arrayBuffer());
-
-	/** @type {Record<string, string>} */
-	const resHeaders = {};
-	rendered.headers.forEach((value, key) => {
-		resHeaders[key] = value;
-	});
-
-	return {
-		status,
-		body: _decoder.decode(resBody),
-		headers: resHeaders,
-		isRaw: true
-	};
-}
-
 const HttpHandler = (
   callback, 
   origRequest) => {
   try {
-    // init({ paths: { base: '', assets: '/.' }, prerendering: true })
-    // origRequest.query = new URLSearchParams(origRequest.queryString)
-    // origRequest.rawBody = _encoder.encode(origRequest.body)
     if (_isDebug) {
       _logger.write(`svelte request payload - ${JSON.stringify(origRequest)} \r\n`)
     }
 
     const req = toRequest(origRequest);
     _server.respond(req)
-      .then((rendered) => toResponse(rendered))
       .then((resp) => {        
         if (_isDebug) {
-          _logger.write(`svelte response - ${JSON.stringify(resp)} \r\n`)
+          _logger.write(`svelte response - ${JSON.stringify(resp?.body)} \r\n`)
         }
         if (origRequest.bodyOnlyReply){
           callback(null, resp?.body);
         } else {
-          callback(null, resp);
+          resp.text().then((data) => {
+            callback(null, {
+              status: resp.status,
+              headers: resp.headers,
+              body: data
+            })
+          });
         }
       })
       .catch((err) => callback(err, null));
