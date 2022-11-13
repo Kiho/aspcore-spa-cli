@@ -7,3 +7,5 @@ PublishProfiles/
 /node_modules
 /build
 .svelte-kit/
+
+/Scripts/**/*.js.map
