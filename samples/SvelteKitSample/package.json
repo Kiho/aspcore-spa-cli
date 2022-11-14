@@ -4,6 +4,7 @@
   "description": "sveltekit-dotnet sample project",
   "scripts": {
     "dev": "vite dev --port 8019",
+    "start": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --ignore-path .gitignore .",

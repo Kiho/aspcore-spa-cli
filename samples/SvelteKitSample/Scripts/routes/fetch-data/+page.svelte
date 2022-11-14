@@ -1,40 +1,13 @@
-<script context="module" lang="ts">
-  throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-	export const prerender = false; // true;
-  // 
-  // const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
-  // function getServerUrl() {
-  //   if (typeof window !== 'undefined') {
-  //     return '';
-  //   }
-  //   return process.env.ASPNETCORE_URLS || SERVER_URL;
-  // }
-
-  // export async function load({ fetch }) {
-  //   const serverUrl = getServerUrl();
-  //   console.log('serverUrl', serverUrl);
-  //   const url = `${serverUrl}/weatherforecast`;
-  //   const response = await fetch(url);
-  //   const data = await response.json();
-
-  //   return {
-  //     status: response.status,
-  //     props: {
-  //       forecasts: data
-  //     }
-  //   };
-  // }
-</script>
-
 <script>
-  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-  
+  // throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");  
 	import NavBar from '../../lib/components/NavBar.svelte';
   import Footer from '../../lib/components/Footer.svelte';
   
-  export let forecasts;
+  export let data;
+
+  $: {
+    console.log(data);
+  }
 </script>
 
 <NavBar />
@@ -43,7 +16,7 @@
     <h1>Weather forecast</h1>
     <p>This component demonstrates fetching data from the server.</p>
   
-    {#if forecasts.length}
+    {#if data.forecasts.length}
     <table class="table">
       <thead>
         <tr>
@@ -54,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each forecasts as item}
+        {#each data.forecasts as item}
         <tr>
           <td>{ item.dateFormatted }</td>
           <td>{ item.temperatureC }</td>

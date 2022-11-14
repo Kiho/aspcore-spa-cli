@@ -1,4 +1,4 @@
-	export const prerender = false; // true;
+export const prerender = false; // true;
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -16,11 +16,7 @@ export async function load({ fetch }) {
   const response = await fetch(url);
   const data = await response.json();
 
-  throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292693)");
-  return {
-    status: response.status,
-    props: {
-      forecasts: data
-    }
-  };
+  // const data = [{ dateFormatted: 'dateFormatted', summary: 'summary' }];
+  // const body = JSON.stringify({ forecasts });
+  return { forecasts: data };
 }

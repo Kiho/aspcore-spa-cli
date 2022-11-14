@@ -1,14 +1,8 @@
-<script context="module" lang="ts">
-	throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
-
-	// export const prerender = false; // true;
-
-	// const pageName = 'About'
-</script>
-
 <script>
 	import NavBar from '../../lib/components/NavBar.svelte';
   import Footer from '../../lib/components/Footer.svelte';
+
+	const pageName = 'About';
 </script>
 
 <svelte:head>

@@ -18,11 +18,11 @@ export const handle = async ({ event, resolve }) => {
 };
 
 export function handleError({ error, event }) {  
-  console.log('error: ', error);
-  console.log('event: ', event);
+  // console.log('error: ', error);
+  // console.log('event: ', event);
  
   return {
-    message: 'Whoops!',
+    message: error,
     code: error.code ?? 'UNKNOWN'
   };
 }
