@@ -10,6 +10,7 @@ import { cleanup } from './cleanup';
 const _isDebug = DEBUG;
 
 const _server = new Server(manifest);
+_server.init({ env: process.env });
 
 let _logger = null;
 
@@ -36,7 +37,9 @@ function toRequest(req) {
 	if (method !== 'GET' && method !== 'HEAD') {
 		init.body = typeof body === 'string' ? Buffer.from(body, 'utf-8') : body;
 	}
-
+	if (_isDebug) {
+		_logger.write(`originalUrl- ${originalUrl} \r\n`);
+	}
 	return new Request(originalUrl, init);
 }
 
