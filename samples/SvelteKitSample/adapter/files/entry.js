@@ -1,5 +1,4 @@
 import { createWriteStream } from 'fs';
-import { installFetch } from '@sveltejs/kit/install-fetch';
 
 import { Server } from 'SERVER';
 import { manifest } from 'MANIFEST';
@@ -8,8 +7,6 @@ import { cleanup } from './cleanup';
 
 // replaced at build time
 const _isDebug = DEBUG;
-
-installFetch();
 
 const _server = new Server(manifest);
 
@@ -78,4 +75,4 @@ const HttpHandler = (
 
 cleanup(_logger);
 
-module.exports = HttpHandler;
+export default HttpHandler;
