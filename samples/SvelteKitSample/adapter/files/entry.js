@@ -1,4 +1,5 @@
 import { createWriteStream } from 'fs';
+import { installPolyfills } from '@sveltejs/kit/node/polyfills';
 
 import { Server } from 'SERVER';
 import { manifest } from 'MANIFEST';
@@ -11,6 +12,8 @@ const _isDebug = DEBUG;
 const _server = new Server(manifest);
 
 let _logger = null;
+
+installPolyfills();
 
 if (_isDebug) {
     const logPath = __dirname + '/debug.log';
