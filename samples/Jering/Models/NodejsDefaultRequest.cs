@@ -38,7 +38,7 @@ namespace Jering
 		/// Gets or sets a value indicating whether nodejs to reply only with body, which
 		/// ignores status and headers. This is a default.
 		/// </summary>
-		public bool BodyOnlyReply { get; set; } = true;
+		public bool BodyOnlyReply { get; set; } = false;
 
 		/// <summary>
 		/// Gets or sets url.

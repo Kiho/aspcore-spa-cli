@@ -126,7 +126,7 @@ namespace Jering
 			{
 				Stream? streamResp = await nodeJSService.InvokeFromFileAsync<Stream>(
 				   modulePath: options.ScriptPath,
-				   exportName: "default",
+				   exportName: "HttpHandler",
 				   args: new object[]
 				   {
 						await SetupRequest(
@@ -184,7 +184,7 @@ namespace Jering
 							overrides).ConfigureAwait(false);
 				nodeResp = await nodeJSService.InvokeFromFileAsync<string>(
 						modulePath: options.ScriptPath,
-						exportName: "default",
+						exportName: "HttpHandler",
 						args: new object[]
 						{
 							req

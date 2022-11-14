@@ -78,4 +78,4 @@ const HttpHandler = (
 
 cleanup(_logger);
 
-export default HttpHandler;
+export { HttpHandler };
