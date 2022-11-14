@@ -14,6 +14,6 @@ export async function load({ fetch }) {
     const data = await response.json();
     // const data = [{ dateFormatted: 'dateFormatted', summary: 'summary' }];
     // const body = JSON.stringify({ forecasts });
-    return { forecasts: data };
+    return { forecasts: data, serverUrl };
 }
 //# sourceMappingURL=+page.server.js.map

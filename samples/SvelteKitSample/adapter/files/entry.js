@@ -1,6 +1,7 @@
 import { createWriteStream } from 'fs';
 import { installPolyfills } from '@sveltejs/kit/node/polyfills';
 
+import { getClientIPFromHeaders } from './headers';
 import { Server } from 'SERVER';
 import { manifest } from 'MANIFEST';
 
@@ -52,14 +53,20 @@ const HttpHandler = (
     }
 
     const req = toRequest(origRequest);
-    _server.respond(req)
-      .then((resp) => {        
+		const ipAddress = getClientIPFromHeaders(req.headers);
+
+    if (_isDebug) {
+      _logger.write(`origRequest.bodyOnlyReply - ${origRequest.bodyOnlyReply} \r\n`)
+    }
+
+    _server.respond(req, {
+			getClientAddress() {
+				return ipAddress;
+			}
+		}).then((resp) => {        
         if (resp.status == 404) {
 					callback(null, null);
 				} else {
-					if (_isDebug) {
-						_logger.write(`svelte response - ${JSON.stringify(resp?.body)} \r\n`)
-					}
 					if (origRequest.bodyOnlyReply){
 						callback(null, resp?.body);
 					} else {
@@ -81,4 +88,4 @@ const HttpHandler = (
 
 cleanup(_logger);
 
-export { HttpHandler };
+export default HttpHandler;

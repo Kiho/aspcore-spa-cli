@@ -18,5 +18,5 @@ export async function load({ fetch }) {
 
   // const data = [{ dateFormatted: 'dateFormatted', summary: 'summary' }];
   // const body = JSON.stringify({ forecasts });
-  return { forecasts: data };
+  return { forecasts: data, serverUrl };
 }
