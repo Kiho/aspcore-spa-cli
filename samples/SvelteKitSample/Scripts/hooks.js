@@ -15,7 +15,7 @@ export const handle = async ({ event, resolve }) => {
     return response;
 };
 export function handleError({ error, event }) {
-    // console.log('error: ', error);
+    console.log('error: ', error);
     // console.log('event: ', event);
     return {
         message: error,

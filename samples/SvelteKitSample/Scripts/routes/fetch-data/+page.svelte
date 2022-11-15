@@ -15,7 +15,6 @@
 	<main class="pb-3">
     <h1>Weather forecast</h1>
     <p>This component demonstrates fetching data from the server.</p>
-  
     {#if data.forecasts.length}
     <table class="table">
       <thead>
