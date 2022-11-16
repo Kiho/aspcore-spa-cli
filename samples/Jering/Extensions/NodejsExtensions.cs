@@ -120,21 +120,21 @@ namespace Jering
 			ArgumentNullException.ThrowIfNull(nameof(nodeJSService));
 			ArgumentNullException.ThrowIfNull(nameof(options));
 
-			bool bodyOnlyReply = false; // overrideBodyOnlyReply ?? options.BodyOnlyReply;
+			bool bodyOnlyReply = overrideBodyOnlyReply ?? options.BodyOnlyReply;
 
 			if (bodyOnlyReply == true)
 			{
 				Stream? streamResp = await nodeJSService.InvokeFromFileAsync<Stream>(
-				   modulePath: options.ScriptPath,
-				   exportName: "default",
-				   args: new object[]
-				   {
+					modulePath: options.ScriptPath,
+					exportName: "default",
+					args: new object[]
+					{
 						await SetupRequest(
 							context,
 							bodyOnlyReply,
 							overrides).ConfigureAwait(false)
-				   },
-				   cancellationToken: cancellationToken).ConfigureAwait(false);
+					},
+					cancellationToken: cancellationToken).ConfigureAwait(false);
 
 				return streamResp == null ? null : new NodejsBodyOnlyResponse(streamResp);
 			}

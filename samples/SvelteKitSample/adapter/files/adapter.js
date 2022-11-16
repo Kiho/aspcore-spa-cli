@@ -18,6 +18,8 @@ export default function ({
       const entry = `${tmp}/entry.js`;
       const staticDirectory = join(out, 'assets');
 
+      builder.log.minor(`Publishing to "${out}"`);
+
       builder.rimraf(tmp);
       builder.rimraf(staticDirectory);
 
@@ -44,6 +46,7 @@ export default function ({
         })};\n`
       );
       
+      /** @type {BuildOptions} */
       const defaultOptions = {
         entryPoints: [entry],
         outfile: join(out, 'index.cjs'),
@@ -53,12 +56,11 @@ export default function ({
         platform: 'node',
         target: 'node12',
       };
-      
+
       const buildOptions = esbuildOptsFunc ? await esbuildOptsFunc(defaultOptions) : defaultOptions;
       await esbuild.build(buildOptions);
 
       builder.log.minor('Copying assets');
-      // builder.writeStatic(staticDirectory);
       builder.writeClient(staticDirectory);
       builder.writePrerendered(staticDirectory);
 

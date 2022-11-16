@@ -67,8 +67,12 @@ const HttpHandler = (
         if (resp.status == 404) {
 					callback(null, null);
 				} else {
+
 					if (origRequest.bodyOnlyReply){
-						callback(null, resp?.body);
+						rendered.text().then((data) => {
+							callback(null, data);
+						});
+						// callback(null, resp?.body);
 					} else {
 						resp.text().then((data) => {
 							callback(null, {
