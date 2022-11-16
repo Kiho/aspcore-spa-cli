@@ -1,4 +1,5 @@
 import { createWriteStream } from 'fs';
+import { join } from 'path';
 import { installPolyfills } from '@sveltejs/kit/node/polyfills';
 
 import { getClientIPFromHeaders } from './headers';
@@ -18,7 +19,7 @@ let _logger = null;
 installPolyfills();
 
 if (_isDebug) {
-    const logPath = __dirname + '/debug.log';
+    const logPath = join(__dirname, 'debug.log');
     console.info(`log path : ${logPath}`);
     _logger = createWriteStream(logPath, {flags : 'w'});
 }
@@ -67,11 +68,11 @@ const HttpHandler = (
         if (resp.status == 404) {
 					callback(null, null);
 				} else {
-
 					if (origRequest.bodyOnlyReply){
-						rendered.text().then((data) => {
+						resp.text().then((data) => {
 							callback(null, data);
 						});
+						// this was working fine with old version of kit
 						// callback(null, resp?.body);
 					} else {
 						resp.text().then((data) => {
