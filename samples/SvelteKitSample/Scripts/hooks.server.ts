@@ -1,8 +1,10 @@
 import cookie from 'cookie';
 import { v4 as uuid } from '@lukeed/uuid';
+
 export const handle = async ({ event, resolve }) => {
     const cookies = cookie.parse(event.request.headers.get('cookie') || '');
     event.locals.userid = cookies.userid || uuid();
+
     const response = await resolve(event);
     if (!cookies.userid) {
         // if this is the first time the user has visited this app,
@@ -14,12 +16,13 @@ export const handle = async ({ event, resolve }) => {
     }
     return response;
 };
-export function handleError({ error, event }) {
-    console.log('error: ', error);
-    // console.log('event: ', event);
-    return {
-        message: error,
-        code: error.code ?? 'UNKNOWN'
-    };
+
+export function handleError({ error, event }) {  
+  console.log('handleError: ');
+  // console.log('event: ', event);
+
+  return {
+    message: error,
+    code: error.code ?? 'UNKNOWN'
+  };
 }
-//# sourceMappingURL=hooks.js.map

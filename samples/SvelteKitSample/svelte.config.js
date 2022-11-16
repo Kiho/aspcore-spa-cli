@@ -19,7 +19,7 @@ const config = {
 			assets: 'Assets',
 			hooks: {
         client: 'Scripts/hooks.client',
-        server: 'Scripts/hooks'
+        server: 'Scripts/hooks.server'
       },
 			lib: 'Scripts/lib',
 			routes: 'Scripts/routes',

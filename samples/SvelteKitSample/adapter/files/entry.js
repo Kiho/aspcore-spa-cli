@@ -56,10 +56,6 @@ const HttpHandler = (
     const req = toRequest(origRequest);
 		const ipAddress = getClientIPFromHeaders(req.headers);
 
-    if (_isDebug) {
-      _logger.write(`origRequest.bodyOnlyReply - ${origRequest.bodyOnlyReply} \r\n`)
-    }
-
     _server.respond(req, {
 			getClientAddress() {
 				return ipAddress;
