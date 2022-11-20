@@ -11,12 +11,11 @@ import { cleanup } from './cleanup';
 // replaced at build time
 const _isDebug = DEBUG;
 
-const _server = new Server(manifest);
-_server.init({ env: process.env });
-
-let _logger = null;
-
 installPolyfills();
+
+const _server = new Server(manifest);
+let initialized;
+let _logger = null;
 
 if (_isDebug) {
     const logPath = join(__dirname, 'debug.log');
@@ -39,29 +38,36 @@ function toRequest(req) {
 	if (method !== 'GET' && method !== 'HEAD') {
 		init.body = typeof body === 'string' ? Buffer.from(body, 'utf-8') : body;
 	}
-	if (_isDebug) {
-		_logger.write(`originalUrl- ${originalUrl} \r\n`);
-	}
+	
 	return new Request(originalUrl, init);
 }
 
-const HttpHandler = (
+async function initServer() {
+	if (!initialized) {
+		await _server.init({ env: process.env });
+		initialized = true;
+		_logger.write(`svelte server initialized \r\n`)
+	}
+}
+
+const HttpHandler =  (
   callback, 
   origRequest) => {
   try {
-    if (_isDebug) {
-      _logger.write(`svelte request payload - ${JSON.stringify(origRequest)} \r\n`)
-    }
-
-    const req = toRequest(origRequest);
-		const ipAddress = getClientIPFromHeaders(req.headers);
-
-    _server.respond(req, {
-			getClientAddress() {
-				return ipAddress;
+		initServer().then(() => {
+			if (_isDebug) {
+				_logger.write(`svelte request payload - ${JSON.stringify(origRequest)} \r\n`);
 			}
-		}).then((resp) => {        
-        if (resp.status == 404) {
+	
+			const req = toRequest(origRequest);
+			const ipAddress = getClientIPFromHeaders(req.headers);
+	
+			_server.respond(req, {
+				getClientAddress() {
+					return ipAddress;
+				}
+			}).then((resp) => {
+				if (resp.status == 404) {
 					callback(null, null);
 				} else {
 					if (origRequest.bodyOnlyReply){
@@ -80,8 +86,9 @@ const HttpHandler = (
 						});
 					}
 				}
-      })
-      .catch((err) => callback(err, null));
+			})
+			.catch((err) => callback(err, null));
+		});
   } catch (err) {
     callback(err, null)
   }
