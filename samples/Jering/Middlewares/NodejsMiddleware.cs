@@ -70,7 +70,7 @@ namespace Jering
 				httpResp.Headers.Append(keyValuePair.Key, new Microsoft.Extensions.Primitives.StringValues(keyValuePair.Value));
 			}
 
-			if (result.BodyStream == null || result.BodyStream.Length == 0)
+			if (result.BodyStream == null)
 				return;
 
 			if (_ShouldGzipCompress)
