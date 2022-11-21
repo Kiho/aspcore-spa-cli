@@ -48,7 +48,7 @@ if (hostEnvironment != null)
                 new SpaOptions { SourcePath = "Scripts" },
                 npmScript: "dev",
                 port: /*default(int)*/ 8019, // Allow vite to find own port
-                regex: "SvelteKit v",
+                regex: "VITE",
                 forceKill: true, // kill anything running on our webpack port
                 useProxy: true, // proxy webpack requests back through our aspnet server
                 runner: ScriptRunnerType.Npm
