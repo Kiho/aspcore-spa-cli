@@ -125,15 +125,16 @@ namespace Jering
 			if (bodyOnlyReply == true)
 			{
 				Stream? streamResp = await nodeJSService.InvokeFromFileAsync<Stream>(
-				   modulePath: options.ScriptPath,
-				   args: new object[]
-				   {
+					modulePath: options.ScriptPath,
+					exportName: "default",
+					args: new object[]
+					{
 						await SetupRequest(
 							context,
 							bodyOnlyReply,
 							overrides).ConfigureAwait(false)
-				   },
-				   cancellationToken: cancellationToken).ConfigureAwait(false);
+					},
+					cancellationToken: cancellationToken).ConfigureAwait(false);
 
 				return streamResp == null ? null : new NodejsBodyOnlyResponse(streamResp);
 			}
@@ -179,10 +180,11 @@ namespace Jering
 			{
 				req = await SetupRequest(
 							context,
-							overrideBodyOnlyReply ?? options.BodyOnlyReply,
+							bodyOnlyReply,
 							overrides).ConfigureAwait(false);
 				nodeResp = await nodeJSService.InvokeFromFileAsync<string>(
 						modulePath: options.ScriptPath,
+						exportName: "default",
 						args: new object[]
 						{
 							req

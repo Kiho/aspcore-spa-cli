@@ -8,3 +8,5 @@ PublishProfiles/
 /build
 /.svelte-kit
 /_js
+
+/Scripts/**/*.js.map

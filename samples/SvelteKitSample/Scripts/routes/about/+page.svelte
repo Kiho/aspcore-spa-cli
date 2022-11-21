@@ -1,10 +1,8 @@
-<script context="module" lang="ts">
-	const pageName = 'About'
-</script>
-
 <script>
-	import NavBar from '../lib/components/NavBar.svelte';
-  import Footer from '../lib/components/Footer.svelte';
+	import NavBar from '../../lib/components/NavBar.svelte';
+  import Footer from '../../lib/components/Footer.svelte';
+
+	const pageName = 'About';
 </script>
 
 <svelte:head>
