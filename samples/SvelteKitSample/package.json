@@ -29,7 +29,7 @@
     "@types/cookie": "^0.4.1",
     "esbuild": "^0.13.14",
     "rimraf": "^3.0.2",
-    "svelte": "^3.47.0",
+    "svelte": "^3.49.0",
     "svelte-adapter-aspcore": "^0.2.1",
     "svelte-check": "^2.7.0",
     "svelte-preprocess": "^4.10.1",
