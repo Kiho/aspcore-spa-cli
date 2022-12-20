@@ -15,7 +15,7 @@ Use [svelte-adapter-aspcore](https://github.com/kiho/svelte-adapter-aspcore) in 
   - Jering.Javascript.NodeJS
 
 # Prerequisites:
- * nodejs > 14
+ * nodejs > 16
  * VS2022 or VS Code
  * dotnet core - [NET Core SDK 6.0 (or later)](https://www.microsoft.com/net/download/core) for Windows, Mac, or Linux
 

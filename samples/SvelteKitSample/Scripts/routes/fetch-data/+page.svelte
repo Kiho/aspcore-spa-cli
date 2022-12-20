@@ -1,13 +1,14 @@
-<script>
+<script type="ts">
   // throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");  
 	import NavBar from '../../lib/components/NavBar.svelte';
   import Footer from '../../lib/components/Footer.svelte';
+  import type { PageData } from './$types';
   
-  export let data;
+  export let data: PageData;
 
-  $: {
-    console.log(data);
-  }
+  // $: {
+  //   console.log(data);
+  // }
 </script>
 
 <NavBar />

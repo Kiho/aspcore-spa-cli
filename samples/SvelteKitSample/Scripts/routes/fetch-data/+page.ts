@@ -1,3 +1,5 @@
+import type { PageLoad } from './$types';
+
 export const prerender = false;
 export const ssr = false;
 
@@ -10,14 +12,14 @@ function getServerUrl() {
   return process.env.ASPNETCORE_URLS || SERVER_URL;
 }
 
-export async function load({ fetch }) {
+export const load: PageLoad = async ({ fetch }) =>  {
   const serverUrl = getServerUrl();
   const url = `${serverUrl}/weatherforecast`;
-  console.log('url', url);
+  console.log('fetch ', url);
   const response = await fetch(url);
 
-  let data;
-  const contentType = response.headers.get('content-type');
+  let data: any;
+  const contentType: string = response.headers.get('content-type');
   console.log('content-type', contentType);
   if (contentType && contentType.indexOf('application/json') !== -1) {
     data = response.json();
