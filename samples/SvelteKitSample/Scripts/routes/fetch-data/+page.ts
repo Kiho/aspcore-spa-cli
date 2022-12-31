@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
 export const prerender = false;
-export const ssr = false;
+export const ssr = true;
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -12,7 +12,7 @@ function getServerUrl() {
   return process.env.ASPNETCORE_URLS || SERVER_URL;
 }
 
-export const load: PageLoad = async ({ fetch }) =>  {
+export const load: PageLoad = async () =>  {
   const serverUrl = getServerUrl();
   const url = `${serverUrl}/weatherforecast`;
   console.log('fetch ', url);
@@ -26,7 +26,6 @@ export const load: PageLoad = async ({ fetch }) =>  {
   } else {
     data = response.text();
   }
-  // const data = [{ dateFormatted: 'dateFormatted', summary: 'summary' }];
-  // const body = JSON.stringify({ forecasts });
+  
   return { forecasts: data, serverUrl: url, contentType };
 }
