@@ -56,14 +56,15 @@ namespace SvelteCliSample
                 // Note: only use spacliproxy in development. 
                 // Production should use "UseSpaStaticFiles()"
                 endpoints.MapToSpaCliProxy(
-                    "{*path}",
-                    new SpaOptions { SourcePath = "ClientApp" },
-                    npmScript: env.IsDevelopment() ? "autobuild" : "",
-                    port: 35729,
-                    regex: "LiveReload enabled",
-                    forceKill: true,
-                    useProxy: false
-                );
+                        "{*path}",
+                        new SpaOptions { SourcePath = "ClientApp" },
+                        npmScript: env.IsDevelopment() ? "dev" : "",
+                        port: /*default(int)*/ 8018, // Allow webpack to find own port
+                        regex: "VITE v4",
+                        forceKill: true, // kill anything running on our webpack port
+                        useProxy: true, // proxy webpack requests back through our aspnet server
+                        runner: ScriptRunnerType.Npm
+                    );
             });
         }
     }
