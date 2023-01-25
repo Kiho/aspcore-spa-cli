@@ -10,7 +10,7 @@ Use [svelte-adapter-aspcore](https://github.com/kiho/svelte-adapter-aspcore) in 
 
 - **ASP.NET .NET 6.x**
   - Web API
-- **Svelte-Kit**
+- **Svelte-Kit 1.x.x**
   - svelte-adapter-aspcore
   - Jering.Javascript.NodeJS
 
