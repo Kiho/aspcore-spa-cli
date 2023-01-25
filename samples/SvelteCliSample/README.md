@@ -1,6 +1,6 @@
-# Asp.NETCore + Svelte + Rollup
+# Asp.NETCore + Svelte + VITE
 
-This repo contains a .NET 5.0 + Svelte.js sample code with SpaCliMiddleware (VS2019).
+This repo contains a .NET 5.0 + Svelte.js sample code with SpaCliMiddleware (VS2022).
  
 ---
 
