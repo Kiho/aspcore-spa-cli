@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "^1.0.0",
-    "@sveltejs/kit": "^1.7.1",
+    "@sveltejs/kit": "^1.15.1",
     "@types/cookie": "^0.5.1",
     "esbuild": "^0.16.10",
     "rimraf": "^3.0.2",
