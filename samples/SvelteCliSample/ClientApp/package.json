@@ -13,6 +13,6 @@
     "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "navaid": "^1.2.0",
     "svelte": "^3.54.0",
-    "vite": "^4.0.0"
+    "vite": "^4.0.5"
   }
 }
